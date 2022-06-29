@@ -1,0 +1,90 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #fafafa;
+}
+
+#game {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 500px;
+  background-color: #fafafa;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+#validation-result {
+    height: 20px;
+}
+#notification {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 40px;
+}
+#terminal {
+  font-size: 2.5em;
+}
+
+#buttons,
+#options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+#buttons button,
+#options button {
+  width: 100px;
+  height: 50px;
+  margin: 0 10px;
+  border-radius: 5px;
+  background-color: #fafafa;
+  border: 1px solid #000;
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+}
+#buttons button:hover,
+#options button:hover {
+  background-color: #000;
+  color: #fafafa;
+}
+#buttons button:active,
+#options button:focus {
+  background-color: #000;
+  color: #fafafa;
+}
+#buttons button:focus,
+#options button:focus {
+  outline: none;
+}
+#buttons button:disabled,
+#options button:disabled {
+  background-color: #fafafa;
+  color: #000;
+}
+#buttons button:disabled:hover,
+#options button:disabled:hover {
+  background-color: #fafafa;
+  color: #000;
+}
+#buttons button:disabled:active,
+#options button:disabled:active {
+  background-color: #fafafa;
+  color: #000;
+}
+#buttons button:disabled:focus,
+#options button:disabled:focus {
+  outline: none;
+}
