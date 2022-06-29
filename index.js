@@ -15,7 +15,7 @@ async function runGame() {
     constructor(sizeArr) {
       this.world = Field.generateField(sizeArr[0], sizeArr[1]);
       this.playerPosition = [0, 0];
-      this.end = false;
+      this.end = 'false';
       this.height = sizeArr[0];
       this.width = sizeArr[1];
     }
@@ -189,11 +189,10 @@ async function runGame() {
     _updatePosition() {
       let [y, x] = this.playerPosition;
       if (this.world[y][x] === hole) {
-        this.end = true;
+        this.end = 'hole';
         console.log("GAME OVER\nYou fell down a hole!");
       } else if (this.world[y][x] === hat) {
-        this.end = true;
-        console.log("YOU WIN\nYou found your hat!");
+        this.end = 'hat';
       } else {
         this.world[y][x] = pathCharacter;
       }
@@ -369,8 +368,8 @@ async function runGame() {
                     game = new Field(fieldSize.sizeArr[fieldSize.current]);
                     render();
                 }
+                event.target.disabled = false;
                 if (!stop) {
-                  event.target.disabled = true;
                   document.querySelector("#validation-result").innerHTML = "VALID FIELD | Path found after " + tries + " tries";
                   break;
                 }
@@ -390,20 +389,14 @@ async function runGame() {
   
 
   function endCheck() {
-    if (game.end) {
-      let answer = prompt("GAME OVER\nWould you like to play again? (y/n)");
-      switch (answer) {
-        case "y":
-          game = new Field(fieldSize.sizeArr[fieldSize.current]);
-          console.clear();
-          break;
-        case "n":
-          console.clear();
-          break;
-        default:
-          console.log("Invalid response: Game closing");
-          break;
-      }
+    if (game.end === "hat") {
+      alert("You found your hat! | New game starting");
+      game = new Field(fieldSize.sizeArr[fieldSize.current]);
+      render();
+    } else if (game.end === "hole") {
+      alert("You fell down a hole! | New game starting");
+      game = new Field(fieldSize.sizeArr[fieldSize.current]);
+      render();
     }
   }
 
