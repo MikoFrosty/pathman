@@ -3,14 +3,21 @@ async function runGame() {
   const hole = "O";
   const fieldCharacter = "░";
   const pathCharacter = "*";
+  let density = 5;
+  let speed = 9;
+  let fieldSize = {
+    sizeArr: [[7, 10], [8, 12], [9, 14], [10, 16], [11, 18], [12,20]],
+    current: 5
+  }
+  let stop = false;
 
   class Field {
-    constructor(height = 12, width = 20) {
-      this.world = Field.generateField(height, width);
+    constructor(sizeArr) {
+      this.world = Field.generateField(sizeArr[0], sizeArr[1]);
       this.playerPosition = [0, 0];
       this.end = false;
-      this.height = height;
-      this.width = width;
+      this.height = sizeArr[0];
+      this.width = sizeArr[1];
     }
 
     print(world) {
@@ -21,14 +28,14 @@ async function runGame() {
         document.querySelector("#validation-result").innerHTML = "";
       console.log("Generating Field");
       let game = [];
-      function randomNum(min = 1, max = 9) {
+      function randomNum(min = 1, max = 10) {
         return Math.floor(Math.random() * (max - min + 1) + min);
       }
       for (let i = 0; i < height; i++) {
         let row = [];
         for (let j = 0; j < width; j++) {
           let num = randomNum();
-          if (num < 7) {
+          if (num > density) {
             row.push(fieldCharacter);
           } else {
             row.push(hole);
@@ -58,8 +65,13 @@ async function runGame() {
 
       //main loop
       while (true) {
+        if (stop) {
+          break;
+        }
         // wait for a second
-        await new Promise((resolve) => setTimeout(resolve, 30));
+        if (speed < 10) {
+          await new Promise((resolve) => setTimeout(resolve, (9 - speed) * 10));
+        }
         console.clear();
         game.print(test.world);
         // loop forever - solution will be found and returned (true or false)
@@ -188,7 +200,7 @@ async function runGame() {
     }
     _boundryCheck(dir, coords) {
       function oob() {
-        console.log("Out of bounds! Please select a different direction.");
+        console.log("Boundry detected");
       }
       switch (dir) {
         case "up":
@@ -243,11 +255,38 @@ async function runGame() {
     }
   }
 
-  let game = new Field(12, 20);
+  let game = new Field(fieldSize.sizeArr[fieldSize.current]);
 
   // click event listener for buttons
   const directions = document.querySelectorAll("#buttons>button");
   const options = document.querySelectorAll("#options>button");
+  const sliders = document.querySelectorAll("#sliders input");
+
+  // event listeners for sliders
+  sliders.forEach((slider) => {
+    slider.addEventListener("change", (e) => {
+      let value = e.target.value;
+      let id = e.target.id;
+      switch (id) {
+        case "size-slider":
+          fieldSize.current = value;
+          document.querySelector("#size-slider-label").innerHTML = "Size (HxW): " + JSON.stringify(fieldSize.sizeArr[value]);
+          game = new Field(fieldSize.sizeArr[fieldSize.current]);
+          render();
+          break;
+        case "density-slider":
+          document.querySelector("#density-slider-label").innerHTML = "Density: " + value;
+          density = value;
+          game = new Field(fieldSize.sizeArr[fieldSize.current]);
+          render();
+          break;
+        case "speed-slider":
+          document.querySelector("#speed-slider-label").innerHTML = value < 10 ? "Speed: " + value : "Speed: Instant";
+          speed = value;
+          break;
+      }
+    });
+  });
 
   // add event listener to wasd keys for up, down, left, right
   document.addEventListener(
@@ -300,27 +339,44 @@ async function runGame() {
           (async () => {
             switch (event.target.id) {
             case "new":
-              console.log("TESTESTTEST");
-              game = new Field(12, 20);
+              game = new Field(fieldSize.sizeArr[fieldSize.current]);
               render();
               break;
             case "validate":
+              event.target.disabled = true;
+              stop = false;
               let tempVal = await game.validateField();
               if (tempVal) {
                 document.querySelector("#validation-result").innerHTML = "VALID FIELD FOUND";
                 } else {
                     document.querySelector("#validation-result").innerHTML = "INVALID FIELD";
                 }
+              event.target.disabled = false;
               render();
               break;
             case "auto":
+                event.target.disabled = true;
+                stop = false;
+                let tries = 1;
                 while (!(await game.validateField())) {
-                    document.querySelector("#validation-result").innerHTML = "INVALID FIELD";
-                    game = new Field(12, 20);
+                    if (stop) {
+                      document.querySelector("#validation-result").innerHTML = "VALIDATION STOPPED | After " + tries + " tries";
+                      event.target.disabled = false;
+                      break;
+                    }
+                    tries++;
+                    document.querySelector("#validation-result").innerHTML = "INVALID FIELD | No possible path";
+                    game = new Field(fieldSize.sizeArr[fieldSize.current]);
                     render();
                 }
-                document.querySelector("#validation-result").innerHTML = "VALID FIELD FOUND";
-            break;
+                if (!stop) {
+                  event.target.disabled = true;
+                  document.querySelector("#validation-result").innerHTML = "VALID FIELD | Path found after " + tries + " tries";
+                  break;
+                }
+            case "stop":
+              stop = true;
+              break;
             }
             // blur button to remove focus
             event.target.blur();
@@ -338,7 +394,7 @@ async function runGame() {
       let answer = prompt("GAME OVER\nWould you like to play again? (y/n)");
       switch (answer) {
         case "y":
-          game = new Field(12, 20);
+          game = new Field(fieldSize.sizeArr[fieldSize.current]);
           console.clear();
           break;
         case "n":
