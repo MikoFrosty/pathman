@@ -9,6 +9,20 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <div class="container">
+      <!-- table for path data -->
+      <table id="path-table">
+        <thead>
+          <tr>
+            <th>Path History</th>
+            <th>Unexplored Branches</th>
+          </tr>
+        </thead>
+        <tbody id="path-table-body">         
+        </tbody>
+      </table>
+    </div>
+    <div class="container">
     <div id="validation-result"></div>
     <div id="notification"></div>
     <div id="game">
@@ -35,12 +49,14 @@
           <input type="range" min="0" max="10" value="5" id="density-slider" />
         </div>
         <div id="speed-slider-container">
-          <div id="speed-slider-label">Speed: 9</div>
-          <input type="range" min="0" max="10" value="9" id="speed-slider" />
+          <div id="speed-slider-label">Speed: 0</div>
+          <input type="range" min="0" max="10" value="0" id="speed-slider" />
         </div>
       </div>
     </div>
     <p>'WASD' keys can be used for movement</p>
+    </div>
+    <div class="container"></div>
     <script>
       (function () {
         "use strict";
