@@ -4,17 +4,18 @@ async function runGame() {
   const fieldCharacter = "░";
   const pathCharacter = "*";
   let density = 5;
-  let speed = 9;
+  let speed = 0;
   let fieldSize = {
     sizeArr: [[7, 10], [8, 12], [9, 14], [10, 16], [11, 18], [12,20]],
     current: 5
   }
   let stop = false;
+  let playerPosition = [0, 0];
 
   class Field {
     constructor(sizeArr) {
       this.world = Field.generateField(sizeArr[0], sizeArr[1]);
-      this.playerPosition = [0, 0];
+      this.playerPosition = playerPosition; 
       this.end = 'false';
       this.height = sizeArr[0];
       this.width = sizeArr[1];
@@ -43,10 +44,14 @@ async function runGame() {
         }
         game.push(row);
       }
-      let hatPosX = randomNum(Math.ceil(width / 2), width - 1);
-      let hatPosY = randomNum(Math.ceil(height / 2), height - 1);
+      let hatPosX = randomNum(0, width - 1);
+      let hatPosY = (height - 1);
       game[hatPosY][hatPosX] = hat;
-      game[0][0] = pathCharacter;
+      playerPosition = [
+        0,
+        randomNum(0, width - 1)
+      ];
+      game[playerPosition[0]][playerPosition[1]] = pathCharacter;
 
       return game;
     }
@@ -54,23 +59,41 @@ async function runGame() {
     async validateField() {
       //Validation
       console.log("Validating Field");
+      document.querySelector("#validation-result").innerHTML = "VALIDATING...";
+      const pathTable = document.querySelector("#path-table-body");
 
       const test = {
         path: [{ coords: this.playerPosition, nodes: [], check: 0 }],
         world: JSON.parse(JSON.stringify(this.world)), // world is an array of arrays // using json trick to deeply copy array
         //position: this.playerPosition, // [y, x] // not used for new algorithm
-        directions: ["up", "right", "down", "left"],
+        directions: ["up", "right", "left", "down"],
         valid: false,
       };
-
+      
       //main loop
       while (true) {
+        // output path to pathTable
+        pathTable.innerHTML = "";
+        for (let i = 0; i < test.path.length; i++) {
+          let path = test.path[i];
+          let tr = document.createElement("tr");
+          let td = document.createElement("td");
+          td.innerHTML = path.coords;
+          tr.appendChild(td);
+          pathTable.appendChild(tr);
+          let branch = document.createElement("td");
+          path.nodes.forEach((node) => {
+            branch.insertAdjacentHTML("beforeend", `&nbsp;${node}&nbsp;&nbsp;`);
+          });
+          tr.appendChild(branch);
+        }
+        
         if (stop) {
           break;
         }
-        // wait for a second
+        // wait
         if (speed < 10) {
-          await new Promise((resolve) => setTimeout(resolve, (9 - speed) * 10));
+          await new Promise((resolve) => setTimeout(resolve, (9 - speed) * 20));
         }
         console.clear();
         game.print(test.world);
@@ -357,17 +380,24 @@ async function runGame() {
                 event.target.disabled = true;
                 stop = false;
                 let tries = 1;
+                document.querySelector("#validation-result").innerHTML = "VALIDATING...";
                 while (!(await game.validateField())) {
                     if (stop) {
                       document.querySelector("#validation-result").innerHTML = "VALIDATION STOPPED | After " + tries + " tries";
-                      event.target.disabled = false;
                       break;
                     }
-                    tries++;
+                    if (tries >= 5000) {
+                      stop = true;
+                      document.querySelector("#validation-result").innerHTML = "VALIDATION STOPPED | Limit reached at 5000 tries";
+                      break;
+                    } else {
+                      tries++;
+                    } 
                     document.querySelector("#validation-result").innerHTML = "INVALID FIELD | No possible path";
                     game = new Field(fieldSize.sizeArr[fieldSize.current]);
                     render();
                 }
+              
                 event.target.disabled = false;
                 if (!stop) {
                   document.querySelector("#validation-result").innerHTML = "VALID FIELD | Path found after " + tries + " tries";
