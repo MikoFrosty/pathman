@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pathman</title>
     <script src="./index.js" defer></script>
+    <link rel="stylesheet" href="./normalize.css" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div class="container">
+    <div class="container left">
       <!-- table for path data -->
       <table id="path-table">
         <thead>
@@ -22,17 +23,17 @@
         </tbody>
       </table>
     </div>
-    <div class="container">
+    <div class="container center">
     <div id="validation-result"></div>
     <div id="notification"></div>
     <div id="game">
       <pre id="terminal"></pre>
     </div>
     <div id="buttons">
-      <button id="up">Up</button>
-      <button id="down">Down</button>
       <button id="left">Left</button>
       <button id="right">Right</button>
+      <button id="down">Down</button>
+      <button id="up">Up</button>
     </div>
     <div id="options">
       <button id="new">New Game</button>
@@ -56,7 +57,7 @@
     </div>
     <p>'WASD' keys can be used for movement</p>
     </div>
-    <div class="container"></div>
+    <div class="container right"></div>
     <script>
       (function () {
         "use strict";
