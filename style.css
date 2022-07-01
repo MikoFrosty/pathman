@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
   font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 16px;
@@ -13,28 +19,31 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-content: center;
   padding-top: 40px;
   background-color: #fafafa;
 }
-.container:nth-child(odd) {
+.container.left, .container.right {
   padding-top: 60px;
-  flex: 1;
-}
-.container:nth-child(1) {
-  overflow-y: scroll;
+  flex: 1 4 300px;
   padding-bottom: 100px;
 }
-.container:nth-child(2) {
-  flex: 1.5;
+.container.center {
+  flex: 1 1 600px;
+}
+.container.left {
+  overflow-y: scroll;
+  min-width: 210px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 table {
   border-collapse: collapse;
-  min-width: 70%;
   border-spacing: 0;
   border: 1px solid #e0e0e0;
   background-color: #fff;
-  margin: 40px 0 20px 20px;
+  margin: 40px 0 20px 0px;
 }
 table tr:nth-child(2n) {
   background-color: #fafafa;
@@ -48,7 +57,6 @@ table th {
 }
 table td {
   padding: 10px;
-  min-width: 50px;
   border-bottom: 1px solid #e0e0e0;
   border-right: 1px solid #e0e0e0;
 }
@@ -85,12 +93,16 @@ table td {
   border: 1px solid rgba(143, 143, 143, 0.103);
 }
 
+#sliders {
+  margin-left: 20px;
+}
+
 #buttons,
 #options {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 20px 20px 10px 20px;; 
 }
 #buttons button,
 #options button {
@@ -136,4 +148,96 @@ table td {
 #buttons button:disabled:focus,
 #options button:disabled:focus {
   outline: none;
+}
+
+@media only screen and (max-width: 860px) {
+  .container.left {
+    min-width: 170px;
+  }
+  th {
+    font-size: 0.7rem;
+  }
+  #game {
+    width: 400px;
+    height: 400px;
+  }
+  #terminal {
+    font-size: 1.5rem;
+  }
+  #buttons button, #options button {
+    font-size: 0.8rem;
+    width: 60px;
+  }
+}
+@media only screen and (max-width: 700px) {
+  #notification {
+    width: 100%;
+  }
+  #game {
+    width: 300px;
+    height: 300px;
+  }
+  #terminal {
+    font-size: 1.2rem;
+  }
+  #options {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #buttons {
+    padding-bottom: 0;
+  }
+  #buttons button, #options button {
+    margin: 4px;
+    font-size: 0.7rem;
+    width: 50px;
+  }
+  #sliders {
+    margin-top: 12px;
+  }
+}
+@media only screen and (max-width: 490px) {
+  th {
+    font-size: 0.5rem;
+  }
+  .container.center > p:last-child {
+    display: none;
+  }
+  #game {
+    width: 250px;
+    height: 250px;
+  }
+  #terminal {
+    font-size: 1rem;
+  }
+  #buttons button, #options button {
+    font-size: 0.6rem;
+    width: 46px;
+    height: 36px;
+  }
+  .container.left {
+    font-size: .6rem;
+    min-width: 112px;
+  }
+  .container.left td, .container.left th {
+    padding: 2px;
+    min-width: 20px;
+  }
+}
+@media only screen and (max-width: 368px) {
+  .center {
+    font-size: 0.7rem;
+  }
+  #game {
+    width: 100%;
+    height: 200px;
+  }
+  #terminal {
+    font-size: 0.8rem;
+  }
+  #buttons button, #options button {
+    font-size: 0.5rem;
+    width: 40px;
+    margin: 1px;
+  }
 }
