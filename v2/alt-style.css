@@ -66,3 +66,24 @@ body {
 .red {
     color: red;
 }
+
+
+
+@media only screen and (max-width: 730px) {
+    #field div {
+        width: 16px;
+        height: 16px;
+    }
+}
+@media only screen and (max-width: 500px) {
+    #field div {
+        width: 12px;
+        height: 12px;
+    }
+}
+@media only screen and (max-width: 380px) {
+    #field div {
+        width: 10px;
+        height: 10px;
+    }
+}
