@@ -1,16 +1,15 @@
 // generate field given height, width, and density // return object with field, start position, and goal position
-export default function generateField(size = 10, density = 3) {
+export default function generateField(nodeHTML, density = 30, size = 10) {
     // Text outputs
     console.log("Generating Field"); // remove maybe
   
     // Init empty field & characters
     const field = [];
-    const start = `<div id="start" data-type="start"></div>`;
-    const goal = `<div id="goal" data-type="goal"></div>`;
-    const floor = `<div class="floor" data-type="floor"></div>`; 
-    const path = `<div class="path" data-type="path"></div>`;
-    const wall = `<div class="wall" data-type="wall"></div>`;
-  
+    const { floor, wall, start, goal } = nodeHTML;
+    // fix for out of range density & size values
+    density = density > 100 ? 100 : density < 0 ? 0 : density;
+    size = size > 10 ? 10 : size < 0 ? 0 : size;
+
     // Predetermined field sizes
     const fieldSizes = [
       [10, 10],
@@ -59,6 +58,6 @@ export default function generateField(size = 10, density = 3) {
   
   // Utility functions
   // generate random number between min and max (inclusive)
-  function randomNum(min = 1, max = 10) {
+  function randomNum(min = 1, max = 100) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
