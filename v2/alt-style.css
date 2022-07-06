@@ -33,9 +33,9 @@ body {
     border-top: 0;
 }
 #field div:hover {
-    background-color: rgb(83, 183, 255);
-    color: rgb(83, 183, 255);
-    border: 1px solid black;
+    background-color: rgb(83, 183, 255) !important;
+    color: rgb(83, 183, 255) !important;
+    border: 1px solid black !important;
 }
 #field #start {
     background-color: green;
@@ -47,14 +47,20 @@ body {
     background-color: #fafafa;
 }
 #field .path {
-    background-color: #0093ce;
+    background-color: rgb(155, 255, 168);
 }
 #field .wall {
     background-color: #000000;
 }
 #field .head {
-    background-color: yellow;
+    background-color: rgb(155, 255, 168);
     border: 4px solid green;
+}
+#field .neighbor {
+    background-color: #c7c7c7;
+}
+#field .trail {
+    background-color: orange;
 }
 
 .red {
