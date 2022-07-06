@@ -1,0 +1,62 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fafafa;
+}
+#field {
+    flex: 0 0 auto;
+    font-size: 0rem;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgb(0, 0, 0);
+    border-left: 1px solid rgb(0, 0, 0);
+}
+#field div {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    border: 1px solid rgb(0, 0, 0);
+    border-left: 0;
+    border-top: 0;
+}
+#field div:hover {
+    background-color: rgb(83, 183, 255);
+    color: rgb(83, 183, 255);
+    border: 1px solid black;
+}
+#field #start {
+    background-color: green;
+}
+#field #goal {
+    background-color: rgb(200, 0, 255);
+}
+#field .floor {
+    background-color: #fafafa;
+}
+#field .path {
+    background-color: #0093ce;
+}
+#field .wall {
+    background-color: #000000;
+}
+#field .head {
+    background-color: yellow;
+    border: 4px solid green;
+}
+
+.red {
+    color: red;
+}
