@@ -1,13 +1,6 @@
 import depthFirstSearch from "./depth-first-search.js";
 import generateField from "./generate-field.js";
-
-// print field to DOM
-function renderField(field) {
-  const fieldDisplay = document.querySelector("#field");
-  const fieldHTML = field.map((row) => row.join("")).join("<br />");
-  fieldDisplay.innerHTML = fieldHTML
-  //console.log(fieldHTML); // Used for console testing
-}
+import aStarSearch from "./a-star-search.js";
 
 const nodeHTML = {
   floor: `<div class="floor" data-type="floor"></div>`,
@@ -20,6 +13,21 @@ const nodeHTML = {
   goal: `<div id="goal" data-type="goal"></div>`
 }
 
-// Depth First Search params: field object (field, start, goal), speed, DOM display function, informed search (true/false),
-// and nodeHTML for each type of node
-depthFirstSearch(generateField(nodeHTML, 30, 10), 5, renderField, true, nodeHTML);
+const searchOptions = {
+  speed: 5,
+  informed: true
+}
+
+// Depth First Search params: field object (field, start, goal), nodeHTML for each type of node, DOM display function, 
+// and options (speed & informed search (true/false))
+//depthFirstSearch(generateField(nodeHTML, 30, 10), nodeHTML, renderField, searchOptions);
+aStarSearch(generateField(nodeHTML, 30, 10), nodeHTML, renderField, searchOptions);
+
+
+// print field to DOM
+function renderField(field) {
+  const fieldDisplay = document.querySelector("#field");
+  const fieldHTML = field.map((row) => row.join("")).join("<br />");
+  fieldDisplay.innerHTML = fieldHTML
+  //console.log(fieldHTML); // Used for console testing
+}
