@@ -1,9 +1,10 @@
-const frank = {
-    path: [{check: 123}],
-    name: 'Frank',
-    age: 30
-}
+const test2 = require('./test2');
 
-let test = frank.path[0];
-test.check = 'Franky';
-console.log(frank.path)
+const obj = {
+    name: "frank",
+    age: 30
+};
+
+console.log(obj.name);
+test2(obj);
+console.log(obj.name);
