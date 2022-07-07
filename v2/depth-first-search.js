@@ -1,4 +1,4 @@
-import getNeighbors from "./get-neighbors.js";
+import getNeighbors from "./get-neighbors-basic.js";
 
 export default async function depthFirstSearch(
   fieldData,
