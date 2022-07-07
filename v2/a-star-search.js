@@ -1,4 +1,5 @@
-import getNeighbors from "./get-neighbors.js";
+import getNeighbors from "./get-neighbors-advanced.js";
+import createNode from "./create-node.js";
 
 export default async function depthFirstSearch(
   fieldData,
@@ -14,41 +15,71 @@ export default async function depthFirstSearch(
 
   // Test world object
   const field = JSON.parse(JSON.stringify(originalField)); // json trick to deeply copy array (In case original field is reused later)
-  const openList = [{ coords: start, nodes: [], check: 0 }];
-  const closedList = [];
+  let openList = [];
+  let closedList = [];
+  const startNode = createNode(start, null, goal);
+  openList.push(startNode);
 
   //main loop
-  while (true) {
+  while (openList.length) {
     // assign last spot in path to 'current' (if path exists), and destructure
     let current = openList[openList.length - 1] ?? null;
     let [y, x] = current?.coords ?? [null, null];
+
+    closedList.push(openList.pop());
 
     // speed settings
     if (speed < 10) {
       await new Promise((resolve) => setTimeout(resolve, (9 - speed) * 20));
     }
-
-    // Orange trail effect to show current best path found
-    let currentTrail = openList.map((node) => node.coords);
-    currentTrail.forEach((coords) => {
-      if (coords === start) {
-      } else if (coords === currentTrail[currentTrail.length - 1]) {
-        field[y][x] = head;
-      } else {
+    
+    // start at goal and trace back to start
+    let trailMarker = closedList[closedList.length - 1];
+    let finalPath = [];
+    while (trailMarker.parent) {
+      finalPath.push(trailMarker.coords);
+      trailMarker = trailMarker.parent;
+    }
+    finalPath.push(trailMarker.coords);
+    finalPath.forEach((coords) => {
+      if (coords !== start && coords.toString() !== goal.toString()) {
         field[coords[0]][coords[1]] = trail;
       }
     });
 
+    if (current.coords === start) {
+        // Do nothing
+      } else if (current.coords === closedList[closedList.length - 1].coords) {
+        field[y][x] = head;
+      }
+
     // display game
     render(field);
+
+    finalPath.forEach((coords) => {
+      if (coords !== start && coords.toString() !== goal.toString()) {
+        field[coords[0]][coords[1]] = path;
+      }
+    });
+    
 
     // check winning and losing conditions
     if ([y, x].toString() === goal.toString()) {
       field[y][x] = goalHTML;
       console.log("Path found!");
-      break;
-    } else if (openList.length < 1) {
-      console.log("No path found!");
+      // start at goal and trace back to start
+      let trailMarker = closedList[closedList.length - 1];
+      let finalPath = [];
+      while (trailMarker.parent) {
+        finalPath.push(trailMarker.coords);
+        trailMarker = trailMarker.parent;
+      }
+      finalPath.push(trailMarker.coords);
+      finalPath.forEach((coords) => {
+        if (coords !== start && coords.toString() !== goal.toString()) {
+          field[coords[0]][coords[1]] = trail;
+        }
+      });
       break;
     }
 
@@ -60,38 +91,25 @@ export default async function depthFirstSearch(
       field[y][x] = path;
     }
 
-    // if current node hasn't been checked yet // each node should only be checked once
-    if (!current.check) {
-      console.log("Finding nodes");
-      current.nodes = getNeighbors(
-        { field, floor, goal },
-        current.coords,
-        informed
-      );
-      current.check = 1;
-    }
+    console.log("Finding neighbors");
+    // find neighbors of current node // branches should be [{...}, {...}]
+    // THIS IS BAD, BUT LETS SEE IF IT WORKS
+    openList = getNeighbors(
+      { field, floor, goal, neighbor },
+      current,
+      openList
+    );
+    current.check = 1;
 
     // change current.nodes to neighbor in field
-    current.nodes.forEach((node) => {
-      field[node[0]][node[1]] = neighbor;
+    openList.forEach((branch) => {
+      field[branch.coords[0]][branch.coords[1]] = neighbor;
     });
-
-    // check if current path has nodes :: Make into a while loop
-    if (!current.nodes.length) {
-      // if no nodes, pop off last path
-      openList.pop();
-      console.log("Backtracking...");
-    } else {
-      // if there are nodes
-      // remove last node from current path
-      openList.push({
-        coords: current.nodes.pop(),
-        nodes: [],
-        check: 0,
-      });
-    }
   } // End of while loop
 
+  if (!openList.length) {
+    console.log("No path found!");
+  }
   render(field);
   return null;
 }
