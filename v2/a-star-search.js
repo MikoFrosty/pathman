@@ -109,30 +109,5 @@ export default async function depthFirstSearch(fieldData, options) {
   }
   render(field);
 
-  const nodes = document.querySelectorAll("#field>div");
-  nodes.forEach((node) => {
-    // find position in nodelist
-    const index = Array.prototype.indexOf.call(nodes, node);
-    // find position in field
-    const [nodeY, nodeX] = [
-      Math.floor(index / field[0].length),
-      index % field[0].length,
-    ];
-    // display array position when mouse hover node
-    const nodeData = document.querySelector("#node-data");
-    node.addEventListener("mouseover", (e) => {
-      nodeData.style.display = "block";
-      //make nodeData position next to mouse position
-      nodeData.style.top = e.clientY - 60 + "px";
-      nodeData.style.left = e.clientX - 60 + "px";
-      // nodeData position by finger position on mobile
-      nodeData.innerHTML = `${e.currentTarget.dataset.type}: y-${nodeY}, x-${nodeX}`;
-    });
-    node.addEventListener("mouseleave", (e) => {
-      nodeData.style.display = "none";
-      nodeData.innerHTML = "";
-    });
-  });
-
   return pathFound;
 }
