@@ -1,26 +1,15 @@
 // Check all directions for edge of array
 export function boundaryCheck(dir, coords, field) {
-  switch (dir) {
-    case "up":
-      if (coords[0] === 0) {
-        return true;
-      }
-      return false;
-    case "right":
-      if (coords[1] === field[0].length - 1) {
-        return true;
-      }
-      return false;
-    case "down":
-      if (coords[0] === field.length - 1) {
-        return true;
-      }
-      return false;
-    case "left":
-      if (coords[1] === 0) {
-        return true;
-      }
-      return false;
+  const [y, x] = coords;
+  if (
+    (y === 0 && dir === "up") ||
+    (x === 0 && dir === "left") ||
+    (y === field.length - 1 && dir === "down") ||
+    (x === field[0].length - 1 && dir === "right")
+  ) {
+    return true;
+  } else {
+    return false;
   }
 }
 
