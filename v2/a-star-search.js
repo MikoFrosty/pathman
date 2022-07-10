@@ -31,61 +31,49 @@ export default async function depthFirstSearch(fieldData, options) {
     }
 
     // start at goal and trace back to start
+    // trailmarker is last item in closedList
     let trailMarker = closedList[closedList.length - 1];
-    let finalPath = [];
-    while (trailMarker.parent) {
-      finalPath.push(trailMarker.coords);
-      trailMarker = trailMarker.parent;
-    }
-    finalPath.push(trailMarker.coords);
-    finalPath.forEach((coords) => {
-      if (coords !== start && coords.toString() !== goal.toString()) {
-        field[coords[0]][coords[1]] = trail;
-      }
-    });
+    let currentPath = [];
 
-    if (current.coords === start) {
-      // Do nothing
-    } else if (current.coords === closedList[closedList.length - 1].coords) {
+    // Show head of current path
+    if (
+      current.coords !== start &&
+      current.coords === closedList[closedList.length - 1].coords
+    ) {
       field[y][x] = head;
+    }
+
+    // push all parents of trailMarker to currentPath
+    while (trailMarker.parent && trailMarker.parent !== startNode) {
+      trailMarker = trailMarker.parent;
+      currentPath.push(trailMarker.coords);
+      field[trailMarker.coords[0]][trailMarker.coords[1]] = trail;
     }
 
     // display game
     render(field);
 
-    // Change to path
-    finalPath.forEach((coords) => {
-      if (coords !== start && coords.toString() !== goal.toString()) {
-        field[coords[0]][coords[1]] = path;
-      }
+    // Change to path (explored square)
+    currentPath.forEach((coords) => {
+      field[coords[0]][coords[1]] = path;
     });
 
     // check winning and losing conditions
-    if ([y, x].toString() === goal.toString()) {
+    if (`${y}${x}` === `${goal[0]}${goal[1]}`) {
+      // Fix for goal turning into neighbor neighbor square
       field[y][x] = goalHTML;
       console.log("Path found!");
       pathFound = true;
-      // start at goal and trace back to start
-      let trailMarker = closedList[closedList.length - 1];
-      let finalPath = [];
-      while (trailMarker.parent) {
-        finalPath.push(trailMarker.coords);
-        trailMarker = trailMarker.parent;
-      }
-      finalPath.push(trailMarker.coords);
-      finalPath.forEach((coords) => {
-        if (coords !== start && coords.toString() !== goal.toString()) {
-          field[coords[0]][coords[1]] = trail;
-        }
+      // Show final trail
+      currentPath.forEach((coords) => {
+        field[coords[0]][coords[1]] = trail;
       });
+      // Break out of while loop
       break;
     }
 
-    // make sure current position updates and shows path
-    if (
-      [y, x].toString() !== start.toString() &&
-      [y, x].toString() !== goal.toString()
-    ) {
+    // change head back to path
+    if (current !== startNode) {
       field[y][x] = path;
     }
 
