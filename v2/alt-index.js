@@ -14,9 +14,15 @@ const generateOptions = {
 
 // start a new field and run aStarSearch on it in a loop until a path is found
 (async () => {
-  let field = generateField(generateOptions);
-  while (await aStarSearch(field, searchOptions) === false) {
-    field = generateField(generateOptions);
+  let pathFound = false;
+  while (!pathFound) {
+    let field = generateField(generateOptions);
+    await aStarSearch(field, searchOptions).then((data) => {
+      if (data) {
+        pathFound = true;
+        nodeHoverStats(field.field);
+      }
+    });
   }
 })();
 
@@ -27,3 +33,36 @@ const generateOptions = {
 // and options (speed & informed search (true/false))
 //depthFirstSearch(generateField(nodeHTML, 30, 10), nodeHTML, searchOptions);
 //aStarSearch(field, searchOptions);
+
+function nodeHoverStats(field) {
+  const nodes = document.querySelectorAll("#field>div");
+  nodes.forEach((node) => {
+    // find position in nodelist
+    const index = Array.prototype.indexOf.call(nodes, node);
+    // find position in field
+    const [nodeY, nodeX] = [
+      Math.floor(index / field[0].length),
+      index % field[0].length,
+    ];
+    
+    // display array position when mouse hover node
+    const nodeData = document.querySelector("#node-data");
+    
+    node.addEventListener("mouseover", showNodeData);
+    node.addEventListener("mouseleave", hideNodeData);
+    
+    function showNodeData(e) {
+      nodeData.style.display = "block";
+      //make nodeData position next to mouse position
+      nodeData.style.top = e.clientY - 60 + "px";
+      nodeData.style.left = e.clientX - 60 + "px";
+      // nodeData position by finger position on mobile
+      nodeData.innerHTML = `${e.currentTarget.dataset.type}: y-${nodeY}, x-${nodeX}`;
+    }
+
+    function hideNodeData() {
+      nodeData.style.display = "none";
+      nodeData.innerHTML = "";
+    }
+  });
+}
