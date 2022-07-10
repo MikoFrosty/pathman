@@ -1,14 +1,10 @@
 import getNeighbors from "./get-neighbors-advanced.js";
-import createNode from "./create-node.js";
+import nodeHTML from "./node-html.js";
+import { createNode, renderField as render } from "./helpers.js";
 
-export default async function depthFirstSearch(
-  fieldData,
-  nodeHTML,
-  render,
-  options
-) {
-  const { speed = 0, informed = false } = options;
+export default async function depthFirstSearch(fieldData, options) {
   const { field: originalField, start, goal } = fieldData;
+  const { speed = 0, informed = false } = options;
   const { floor, path, trail, neighbor, head, goal: goalHTML } = nodeHTML;
 
   console.log("Searching for path...");
@@ -19,12 +15,13 @@ export default async function depthFirstSearch(
   let closedList = [];
   const startNode = createNode(start, null, goal);
   openList.push(startNode);
+  let pathFound = false;
 
   //main loop
   while (openList.length) {
-    // assign last spot in path to 'current' (if path exists), and destructure
-    let current = openList[openList.length - 1] ?? null;
-    let [y, x] = current?.coords ?? [null, null];
+    // assign last spot in path to 'current', and destructure
+    let current = openList[openList.length - 1];
+    let [y, x] = current.coords;
 
     closedList.push(openList.pop());
 
@@ -32,7 +29,7 @@ export default async function depthFirstSearch(
     if (speed < 10) {
       await new Promise((resolve) => setTimeout(resolve, (9 - speed) * 20));
     }
-    
+
     // start at goal and trace back to start
     let trailMarker = closedList[closedList.length - 1];
     let finalPath = [];
@@ -48,25 +45,26 @@ export default async function depthFirstSearch(
     });
 
     if (current.coords === start) {
-        // Do nothing
-      } else if (current.coords === closedList[closedList.length - 1].coords) {
-        field[y][x] = head;
-      }
+      // Do nothing
+    } else if (current.coords === closedList[closedList.length - 1].coords) {
+      field[y][x] = head;
+    }
 
     // display game
     render(field);
 
+    // Change to path
     finalPath.forEach((coords) => {
       if (coords !== start && coords.toString() !== goal.toString()) {
         field[coords[0]][coords[1]] = path;
       }
     });
-    
 
     // check winning and losing conditions
     if ([y, x].toString() === goal.toString()) {
       field[y][x] = goalHTML;
       console.log("Path found!");
+      pathFound = true;
       // start at goal and trace back to start
       let trailMarker = closedList[closedList.length - 1];
       let finalPath = [];
@@ -91,7 +89,6 @@ export default async function depthFirstSearch(
       field[y][x] = path;
     }
 
-    console.log("Finding neighbors");
     // find neighbors of current node // branches should be [{...}, {...}]
     // THIS IS BAD, BUT LETS SEE IF IT WORKS
     openList = getNeighbors(
@@ -111,5 +108,31 @@ export default async function depthFirstSearch(
     console.log("No path found!");
   }
   render(field);
-  return null;
+
+  const nodes = document.querySelectorAll("#field>div");
+  nodes.forEach((node) => {
+    // find position in nodelist
+    const index = Array.prototype.indexOf.call(nodes, node);
+    // find position in field
+    const [nodeY, nodeX] = [
+      Math.floor(index / field[0].length),
+      index % field[0].length,
+    ];
+    // display array position when mouse hover node
+    const nodeData = document.querySelector("#node-data");
+    node.addEventListener("mouseover", (e) => {
+      nodeData.style.display = "block";
+      //make nodeData position next to mouse position
+      nodeData.style.top = e.clientY - 60 + "px";
+      nodeData.style.left = e.clientX - 60 + "px";
+      // nodeData position by finger position on mobile
+      nodeData.innerHTML = `${e.currentTarget.dataset.type}: y-${nodeY}, x-${nodeX}`;
+    });
+    node.addEventListener("mouseleave", (e) => {
+      nodeData.style.display = "none";
+      nodeData.innerHTML = "";
+    });
+  });
+
+  return pathFound;
 }
