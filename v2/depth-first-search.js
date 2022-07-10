@@ -1,13 +1,13 @@
 import getNeighbors from "./get-neighbors-basic.js";
+import nodeHTML from "./node-html.js";
+import { renderField as render } from "./helpers.js";
 
 export default async function depthFirstSearch(
   fieldData,
-  nodeHTML,
-  render,
   options
 ) {
-  const { speed = 0, informed = false } = options;
   const { field: originalField, start, goal } = fieldData;
+  const { speed = 0, informed = false } = options;
   const { floor, path, trail, neighbor, head, goal: goalHTML } = nodeHTML;
 
   console.log("Searching for path...");
