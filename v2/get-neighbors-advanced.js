@@ -3,105 +3,26 @@ import { boundaryCheck, createNode } from "./helpers.js";
 export default function getNeighbors(fieldData, node, openList) {
   const { field, floor, goal, neighbor } = fieldData;
   const [y, x] = node.coords;
-  const directions = ["up", "right", "down", "left"];
+  const dirs = {
+    up: [y - 1, x],
+    right: [y, x + 1],
+    down: [y + 1, x],
+    left: [y, x - 1],
+  };
 
   let neighbors = [];
-  // check all squares around current square for list of nodes & push to current nodes node list
-  directions.forEach((direction) => {
-    // check if direction is valid
-    if (!boundaryCheck(direction, [y, x], field)) {
-      switch (direction) {
-        case "up":
-          // if neighbor is floor or goal
-          if (
-            field[y - 1][x] === floor ||
-            [y - 1, x].toString() === goal.toString()
-          ) {
-            // Create neighbor object
-            let neighbor = createNode([y - 1, x], node, goal);
-            // add neighbor to neighbors
-            neighbors.push(neighbor);
-          } else if (field[y - 1][x] === neighbor) {
-            // find [y-1, x] in openList
-            let existingNeighbor = openList.find(
-              (node) => node.coords.toString() === [y - 1, x].toString()
-            );
-            // compare gScore of existingNeighbor and node
-            if (existingNeighbor.gScore > node.gScore + 1) {
-              // if existingNeighbor gScore is greater than node gScore, replace existingNeighbor with node
-              existingNeighbor.parent = node;
-              existingNeighbor.gScore = node.gScore + 1;
-              existingNeighbor.fScore =
-                node.gScore + 1 + existingNeighbor.hScore;
-            }
-          }
-          break;
-        case "right":
-          if (
-            field[y][x + 1] === floor ||
-            [y, x + 1].toString() === goal.toString()
-          ) {
-            let neighbor = createNode([y, x + 1], node, goal);
-            neighbors.push(neighbor);
-          } else if (field[y][x + 1] === neighbor) {
-            let existingNeighbor = openList.find(
-              (node) => node.coords.toString() === [y, x + 1].toString()
-            );
-            if (existingNeighbor.gScore > node.gScore + 1) {
-              existingNeighbor.parent = node;
-              existingNeighbor.gScore = node.gScore + 1;
-              existingNeighbor.fScore =
-                node.gScore + 1 + existingNeighbor.hScore;
-            }
-          }
-          break;
-        case "down":
-          if (
-            field[y + 1][x] === floor ||
-            [y + 1, x].toString() === goal.toString()
-          ) {
-            let neighbor = createNode([y + 1, x], node, goal);
-            neighbors.push(neighbor);
-          } else if (field[y + 1][x] === neighbor) {
-            let existingNeighbor = openList.find(
-              (node) => node.coords.toString() === [y + 1, x].toString()
-            );
-            if (existingNeighbor.gScore > node.gScore + 1) {
-              existingNeighbor.parent = node;
-              existingNeighbor.gScore = node.gScore + 1;
-              existingNeighbor.fScore =
-                node.gScore + 1 + existingNeighbor.hScore;
-            }
-          }
-          break;
-        case "left":
-          if (
-            field[y][x - 1] === floor ||
-            [y, x - 1].toString() === goal.toString()
-          ) {
-            let neighbor = createNode([y, x - 1], node, goal);
-            neighbors.push(neighbor);
-          } else if (field[y][x - 1] === neighbor) {
-            let existingNeighbor = openList.find(
-              (node) => node.coords.toString() === [y, x - 1].toString()
-            );
-            if (existingNeighbor.gScore > node.gScore + 1) {
-              existingNeighbor.parent = node;
-              existingNeighbor.gScore = node.gScore + 1;
-              existingNeighbor.fScore =
-                node.gScore + 1 + existingNeighbor.hScore;
-            }
-          }
-          break;
-      }
+
+  // check all squares around node for neighbors
+  for (let dir in dirs) {
+    if (!boundaryCheck(dir, [y, x], field)) {
+      checkDirection(dirs[dir]);
     }
-  });
-  
+  }
+
   // push neighbors to openList
   openList.push(...neighbors);
 
-  // a* search
-  // sort openList by fScore
+  // sort openList primarily by fScore, secondarily by hScore
   openList.sort((a, b) => {
     if (a.fScore === b.fScore) {
       return b.hScore - a.hScore;
@@ -109,10 +30,37 @@ export default function getNeighbors(fieldData, node, openList) {
       return b.fScore - a.fScore;
     }
   });
-  
-  
-  // Breadth first search
+
+  // Breadth first search instead of Best first A*
   //openList.sort((a, b) => b.gScore - a.gScore);
-  // none - Depth first search
+  // no sort - basically depth first search
+
   return openList;
+
+  // Handle neighbor check in specific direction
+  function checkDirection(coords) {
+    const [y, x] = coords;
+    if (field[y][x] === floor || `${y}${x}` === `${goal[0]}${goal[1]}`) {
+      let neighbor = createNode([y, x], node, goal);
+      neighbors.push(neighbor);
+    } else if (field[y][x] === neighbor) {
+      compareNeighbors([y, x]);
+    }
+  }
+
+  // Compare neighbors and update values if necessary
+  function compareNeighbors(coords) {
+    // find coords in openList
+    let existingNeighbor = openList.find(
+      (node) =>
+        `${node.coords[0]}${node.coords[1]}` === `${coords[0]}${coords[1]}`
+    );
+    // compare gScore of existingNeighbor and node
+    if (existingNeighbor.gScore > node.gScore + 1) {
+      // if existingNeighbor gScore is greater than node gScore, replace existingNeighbor with node
+      existingNeighbor.parent = node;
+      existingNeighbor.gScore = node.gScore + 1;
+      existingNeighbor.fScore = node.gScore + 1 + existingNeighbor.hScore;
+    }
+  }
 }
