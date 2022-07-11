@@ -31,11 +31,14 @@ export default function getNeighbors(fieldData, node, openList) {
     }
   });
 
+  // add neighbor HTML to field for new neighbors found
+  neighbors.forEach((branch) => {
+    field[branch.coords[0]][branch.coords[1]] = neighbor;
+  });
+
   // Breadth first search instead of Best first A*
   //openList.sort((a, b) => b.gScore - a.gScore);
   // no sort - basically depth first search
-
-  return openList;
 
   // Handle neighbor check in specific direction
   function checkDirection(coords) {
