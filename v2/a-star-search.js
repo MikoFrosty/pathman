@@ -1,4 +1,4 @@
-import getNeighbors from "./get-neighbors-advanced.js";
+import dealWithNeighbors from "./get-neighbors-advanced.js";
 import nodeHTML from "./node-html.js";
 import { createNode, renderField as render } from "./helpers.js";
 
@@ -77,19 +77,8 @@ export default async function depthFirstSearch(fieldData, options) {
       field[y][x] = path;
     }
 
-    // find neighbors of current node // branches should be [{...}, {...}]
-    // THIS IS BAD, BUT LETS SEE IF IT WORKS
-    openList = getNeighbors(
-      { field, floor, goal, neighbor },
-      current,
-      openList
-    );
-    current.check = 1;
-
-    // change current.nodes to neighbor in field
-    openList.forEach((branch) => {
-      field[branch.coords[0]][branch.coords[1]] = neighbor;
-    });
+    // Find all neighbors of current node, and push to openList. Sort openList. Add neighbors to field.
+    dealWithNeighbors({ field, floor, goal, neighbor }, current, openList);
   } // End of while loop
 
   if (!openList.length) {
