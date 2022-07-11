@@ -8,7 +8,7 @@ const searchOptions = {
 };
 
 const generateOptions = {
-  density: 10,
+  density: 30,
   size: 10,
 };
 
