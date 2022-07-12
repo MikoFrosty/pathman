@@ -1,4 +1,4 @@
-import boundryCheck from "./boundry-check.js";
+import { boundaryCheck } from "./helpers.js";
 
 export default function getNeighbors(fieldData, node, informed) {
     const { field, floor, goal } = fieldData;
@@ -10,7 +10,7 @@ export default function getNeighbors(fieldData, node, informed) {
     // check all squares around current square for list of nodes & push to current nodes node list
     directions.forEach((direction) => {
       // check if direction is valid
-      if (!boundryCheck(direction, [y, x], field)) {
+      if (!boundaryCheck(direction, [y, x], field)) {
         switch (direction) {
           case "up":
             // if neighbor is not a wall
