@@ -22,10 +22,11 @@ export default async function aStarSearch(fieldData, options) {
   const startNode = createNode(start, null, goal);
   openList.push(startNode);
   let pathFound = false;
+  let steps = 0;
 
   //main loop
   while (openList.length) {
-    
+    steps++;
     // assign last spot in path to 'current', and destructure
     let current = openList[openList.length - 1];
     let [y, x] = current.coords;
@@ -66,10 +67,10 @@ export default async function aStarSearch(fieldData, options) {
     });
 
     // check winning and losing conditions
-    if (`${y} ${x}` === `${goal[0]} ${goal[1]}`) {
+    if (y === goal[0] && x === goal[1]) {
       // Fix for goal turning into neighbor neighbor square
       field[y][x] = goalHTML;
-      status.textContent = "Path found!";
+      status.textContent = `Path found! Loops: ${steps} - Path length: ${currentPath.length}`;
       pathFound = true;
       // Show final trail
       currentPath.forEach((coords) => {
@@ -94,7 +95,7 @@ export default async function aStarSearch(fieldData, options) {
     );
   } // End of while loop
 
-  if (!openList.length) {
+  if (!pathFound) {
     status.textContent = "No path found!";
   }
   render(field, originalField, display);
