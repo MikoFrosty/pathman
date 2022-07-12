@@ -11,6 +11,7 @@ export default async function depthFirstSearch(fieldData, options) {
   } = options;
   const { floor, path, trail, neighbor, head, goal: goalHTML } = nodeHTML;
   let pathFound = false;
+  let steps = 0;
 
   search.textContent = `${informed ? "Best Depth First" : "Depth First"}`;
   status.textContent = "Searching for path...";
@@ -21,10 +22,11 @@ export default async function depthFirstSearch(fieldData, options) {
 
   //main loop
   while (pathNodes.length > 0) {
+    steps++;
     status.textContent = "Searching for path...";
     // assign last spot in path to 'current' (if path exists), and destructure
-    let current = pathNodes[pathNodes.length - 1] ?? null;
-    let [y, x] = current?.coords ?? [null, null];
+    let current = pathNodes[pathNodes.length - 1];
+    let [y, x] = current.coords;
 
     // speed settings
     if (speed < 10) {
@@ -46,18 +48,15 @@ export default async function depthFirstSearch(fieldData, options) {
     render(field, originalField, display);
 
     // check winning and losing conditions
-    if ([y, x].toString() === goal.toString()) {
+    if (y === goal[0] && x === goal[1]) {
       field[y][x] = goalHTML;
       pathFound = true;
-      status.textContent = "Path found!";
+      status.textContent = `Path found! Loops: ${steps} - Path length: ${pathNodes.length - 2}`;
       break;
     }
 
     // make sure current position updates and shows path
-    if (
-      [y, x].toString() !== start.toString() &&
-      [y, x].toString() !== goal.toString()
-    ) {
+    if (current.coords !== start && !(y === goal[0] && x === goal[1])) {
       field[y][x] = path;
     }
 
