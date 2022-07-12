@@ -4,22 +4,40 @@ import aStarSearch from "./a-star-search.js";
 import dom, { nodeHoverStats } from "./dom.js";
 
 const searchOptions = {
-  speed: 0,
+  speed: 9,
   informed: true,
-  output: dom.out1  
+  output: dom.out1,
 };
 const genOptions = {
   density: 30,
-  size: 3,
+  size: 1,
 };
 
 let field = generateField(genOptions);
 
-findPath(field, aStarSearch, { searchOptions, genOptions, once: false });
-findPath(field, depthFirstSearch, {
-  searchOptions: { ...searchOptions, output: dom.out2 },
+// Breadth First
+findPath(field, aStarSearch, {
+  searchOptions: { ...searchOptions, informed: false, output: dom.out1 },
   genOptions,
-  once: false,
+  once: true,
+});
+// Depth First
+findPath(field, depthFirstSearch, {
+  searchOptions: { ...searchOptions, informed: false, output: dom.out2 },
+  genOptions,
+  once: true,
+});
+// A*
+findPath(field, aStarSearch, {
+  searchOptions: { ...searchOptions, informed: true, output: dom.out3 },
+  genOptions,
+  once: true,
+});
+// Best Depth First
+findPath(field, depthFirstSearch, {
+  searchOptions: { ...searchOptions, informed: true, output: dom.out4 },
+  genOptions,
+  once: true,
 });
 
 // start a new field and run search on it in a loop until a path is found, or once if once = true
