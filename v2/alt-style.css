@@ -16,6 +16,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  align-content: center;
   min-height: 100%;
   background-color: #fafafa;
   overflow-x: hidden;
@@ -30,9 +31,12 @@ body {
 }
 .field-container {
   display: flex;
+  flex: 0 1 500px;
   flex-direction: column;
   align-items: center;
+  align-content: center;
   justify-content: center;
+  min-height: 290px;
   margin: 0 20px;
 }
 .info-box {
@@ -111,19 +115,28 @@ body {
 }
 
 @media only screen and (max-width: 730px) {
-  #field div {
-    width: 16px;
-    height: 16px;
+  .field div {
+    width: 14px;
+    height: 14px;
   }
 }
 @media only screen and (max-width: 500px) {
-  #field div {
+    p {
+        font-size: 0.8rem;
+    }
+    .search-type {
+        font-size: 0.8rem;
+    }
+    .field-container {
+        min-height: 210px;
+    }
+  .field div {
     width: 12px;
     height: 12px;
   }
 }
 @media only screen and (max-width: 380px) {
-  #field div {
+  .field div {
     width: 10px;
     height: 10px;
   }
