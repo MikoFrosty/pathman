@@ -1,6 +1,6 @@
 import { boundaryCheck, createNode } from "./helpers.js";
 
-export default function getNeighbors(fieldData, node, openList) {
+export default function getNeighbors(fieldData, node, openList, informed) {
   const { field, floor, goal, neighbor } = fieldData;
   const [y, x] = node.coords;
   const dirs = {
@@ -22,23 +22,25 @@ export default function getNeighbors(fieldData, node, openList) {
   // push neighbors to openList
   openList.push(...neighbors);
 
-  // sort openList primarily by fScore, secondarily by hScore
-  openList.sort((a, b) => {
-    if (a.fScore === b.fScore) {
-      return b.hScore - a.hScore;
-    } else {
-      return b.fScore - a.fScore;
-    }
-  });
+  if (informed) {
+    // sort openList primarily by fScore, secondarily by hScore
+    openList.sort((a, b) => {
+      if (a.fScore === b.fScore) {
+        return b.hScore - a.hScore;
+      } else {
+        return b.fScore - a.fScore;
+      }
+    });
+  } else {
+    // Breadth first search instead of Best first A*
+    openList.sort((a, b) => b.gScore - a.gScore);
+    // no sort - basically depth first search
+  }
 
   // add neighbor HTML to field for new neighbors found
   neighbors.forEach((branch) => {
     field[branch.coords[0]][branch.coords[1]] = neighbor;
   });
-
-  // Breadth first search instead of Best first A*
-  //openList.sort((a, b) => b.gScore - a.gScore);
-  // no sort - basically depth first search
 
   // Handle neighbor check in specific direction
   function checkDirection(coords) {
