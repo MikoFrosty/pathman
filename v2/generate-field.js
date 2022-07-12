@@ -3,8 +3,6 @@ import { randomNum } from "./helpers.js";
 
 // generate field given height, width, and density // return object with field, start position, and goal position
 export default function generateField(options) {
-  // Text outputs
-  console.log("Generating Field"); // remove maybe
 
   // Init empty field, HTML strings, and options
   const field = [];
