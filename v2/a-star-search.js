@@ -1,16 +1,22 @@
 import dealWithNeighbors from "./get-neighbors-advanced.js";
 import nodeHTML from "./node-html.js";
-import { createNode, renderField as render } from "./helpers.js";
+import { createNode } from "./helpers.js";
+import dom, { renderField as render } from "./dom.js";
 
-export default async function depthFirstSearch(fieldData, options) {
+export default async function aStarSearch(fieldData, options) {
   const { field: originalField, start, goal } = fieldData;
-  const { speed = 0, informed = false } = options;
+  const {
+    speed = 0,
+    informed = false,
+    output: { display, status, search },
+  } = options;
   const { floor, path, trail, neighbor, head, goal: goalHTML } = nodeHTML;
-
-  console.log("Searching for path...");
-
+  
+  search.textContent = `A* Search${informed ? "" : " - Uninformed (Breadth First)"}`;
+  status.textContent = "Searching for path...";
+  
   // Test world object
-  const field = JSON.parse(JSON.stringify(originalField)); // json trick to deeply copy array (In case original field is reused later)
+  const field = originalField.map((array) => [...array]);
   let openList = [];
   let closedList = [];
   const startNode = createNode(start, null, goal);
@@ -19,6 +25,7 @@ export default async function depthFirstSearch(fieldData, options) {
 
   //main loop
   while (openList.length) {
+    
     // assign last spot in path to 'current', and destructure
     let current = openList[openList.length - 1];
     let [y, x] = current.coords;
@@ -51,7 +58,7 @@ export default async function depthFirstSearch(fieldData, options) {
     }
 
     // display game
-    render(field);
+    render(field, originalField, display);
 
     // Change to path (explored square)
     currentPath.forEach((coords) => {
@@ -62,7 +69,7 @@ export default async function depthFirstSearch(fieldData, options) {
     if (`${y}${x}` === `${goal[0]}${goal[1]}`) {
       // Fix for goal turning into neighbor neighbor square
       field[y][x] = goalHTML;
-      console.log("Path found!");
+      status.textContent = "Path found!";
       pathFound = true;
       // Show final trail
       currentPath.forEach((coords) => {
@@ -77,14 +84,20 @@ export default async function depthFirstSearch(fieldData, options) {
       field[y][x] = path;
     }
 
+    status.textContent = "Finding neighbors...";
     // Find all neighbors of current node, and push to openList. Sort openList. Add neighbors to field.
-    dealWithNeighbors({ field, floor, goal, neighbor }, current, openList);
+    dealWithNeighbors(
+      { field, floor, goal, neighbor },
+      current,
+      openList,
+      informed
+    );
   } // End of while loop
 
   if (!openList.length) {
-    console.log("No path found!");
+    status.textContent = "No path found!";
   }
-  render(field);
+  render(field, originalField, display);
 
   return pathFound;
 }
