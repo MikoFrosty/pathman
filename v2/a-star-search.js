@@ -12,7 +12,7 @@ export default async function aStarSearch(fieldData, options) {
   } = options;
   const { floor, path, trail, neighbor, head, goal: goalHTML } = nodeHTML;
   
-  search.textContent = `A* Search${informed ? "" : " - Uninformed (Breadth First)"}`;
+  search.textContent = `${informed ? "A*" : "Breadth First"}`;
   status.textContent = "Searching for path...";
   
   // Test world object
@@ -66,7 +66,7 @@ export default async function aStarSearch(fieldData, options) {
     });
 
     // check winning and losing conditions
-    if (`${y}${x}` === `${goal[0]}${goal[1]}`) {
+    if (`${y} ${x}` === `${goal[0]} ${goal[1]}`) {
       // Fix for goal turning into neighbor neighbor square
       field[y][x] = goalHTML;
       status.textContent = "Path found!";
