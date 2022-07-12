@@ -4,7 +4,7 @@ import aStarSearch from "./a-star-search.js";
 import dom, { nodeHoverStats } from "./dom.js";
 
 const searchOptions = {
-  speed: 9,
+  speed: 0,
   informed: true,
   output: dom.out1,
 };
