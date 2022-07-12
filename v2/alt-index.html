@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./alt-style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./alt-style.css" />
     <script src="./alt-index.js" type="module" defer></script>
     <title>v2</title>
-</head>
-<body>
-    <div id="node-data"></div>
-    <div id="field"></div>
-</body>
+  </head>
+  <body>
+    <div class="field-container">
+      <div class="info-box">
+        <p class="search-type">SEARCH TYPE: <span id="search1"></span></p>
+        <em><p>Status:</p>
+        <p class="status" id="status1"></p></em>
+      </div>
+      <div class="node-data"></div>
+      <div class="field" id="display1"></div>
+    </div>
+    <div class="field-container">
+      <div class="info-box">
+        <p class="search-type">SEARCH TYPE: <span id="search2"></span></p>
+        <em><p>Status:</p>
+        <p class="status" id="status2"></p></em>
+      </div>
+      <div class="node-data"></div>
+      <div class="field" id="display2"></div>
+    </div>
+  </body>
 </html>
