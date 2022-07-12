@@ -40,10 +40,16 @@ body {
   margin: 0 20px;
 }
 .info-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
   text-align: center;
   margin: 10px;
 }
 .search-type {
+    display: block;
     font-size: 1.1rem;
     font-weight: 500;
 }
@@ -136,6 +142,9 @@ body {
   }
 }
 @media only screen and (max-width: 380px) {
+  .field-container {
+    margin: 0;
+  }
   .field div {
     width: 10px;
     height: 10px;
