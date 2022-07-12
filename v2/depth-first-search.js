@@ -1,23 +1,27 @@
 import getNeighbors from "./get-neighbors-basic.js";
 import nodeHTML from "./node-html.js";
-import { renderField as render } from "./helpers.js";
+import dom, { renderField as render } from "./dom.js";
 
-export default async function depthFirstSearch(
-  fieldData,
-  options
-) {
+export default async function depthFirstSearch(fieldData, options) {
   const { field: originalField, start, goal } = fieldData;
-  const { speed = 0, informed = false } = options;
+  const {
+    speed = 0,
+    informed = false,
+    output: { display, status, search },
+  } = options;
   const { floor, path, trail, neighbor, head, goal: goalHTML } = nodeHTML;
+  let pathFound = false;
 
-  console.log("Searching for path...");
+  search.textContent = `Depth First Search - ${informed ? "Informed" : "Uninformed"}`;
+  status.textContent = "Searching for path...";
 
   // Test world object
-  const field = JSON.parse(JSON.stringify(originalField)); // json trick to deeply copy array (In case original field is reused later)
+  const field = originalField.map((array) => [...array]);
   const pathNodes = [{ coords: start, nodes: [], check: 0 }];
 
   //main loop
-  while (true) {
+  while (pathNodes.length > 0) {
+    status.textContent = "Searching for path...";
     // assign last spot in path to 'current' (if path exists), and destructure
     let current = pathNodes[pathNodes.length - 1] ?? null;
     let [y, x] = current?.coords ?? [null, null];
@@ -39,15 +43,13 @@ export default async function depthFirstSearch(
     });
 
     // display game
-    render(field);
+    render(field, originalField, display);
 
     // check winning and losing conditions
     if ([y, x].toString() === goal.toString()) {
       field[y][x] = goalHTML;
-      console.log("Path found!");
-      break;
-    } else if (pathNodes.length < 1) {
-      console.log("No path found!");
+      pathFound = true;
+      status.textContent = "Path found!";
       break;
     }
 
@@ -61,7 +63,7 @@ export default async function depthFirstSearch(
 
     // if current node hasn't been checked yet // each node should only be checked once
     if (!current.check) {
-      console.log("Finding nodes");
+      status.textContent = "Finding neighbors...";
       current.nodes = getNeighbors(
         { field, floor, goal },
         current.coords,
@@ -79,7 +81,7 @@ export default async function depthFirstSearch(
     if (!current.nodes.length) {
       // if no nodes, pop off last path
       pathNodes.pop();
-      console.log("Backtracking...");
+      status.textContent = "Backtracking...";
     } else {
       // if there are nodes
       // remove last node from current path
@@ -91,6 +93,9 @@ export default async function depthFirstSearch(
     }
   } // End of while loop
 
-  render(field);
-  return null;
+  if (!pathFound) {
+    status.textContent = "No path found!";
+  }
+  render(field, originalField, display);
+  return pathFound;
 }
