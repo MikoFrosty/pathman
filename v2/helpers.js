@@ -28,14 +28,6 @@ export function createNode(coords, parent, goal) {
   };
 }
 
-// print field to DOM
-export function renderField(field, oldField) {
-  const fieldDisplay = document.querySelector("#field");
-  const fieldHTML = field.map((row) => row.join("")).join("<br />");
-  fieldDisplay.innerHTML = fieldHTML;
-  //console.log(fieldHTML); // Used for console testing
-}
-
 // generate random number between min and max (inclusive)
 export function randomNum(min = 1, max = 100) {
   return Math.floor(Math.random() * (max - min + 1) + min);
