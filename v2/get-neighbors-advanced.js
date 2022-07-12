@@ -45,7 +45,7 @@ export default function getNeighbors(fieldData, node, openList, informed) {
   // Handle neighbor check in specific direction
   function checkDirection(coords) {
     const [y, x] = coords;
-    if (field[y][x] === floor || `${y} ${x}` === `${goal[0]} ${goal[1]}`) {
+    if (field[y][x] === floor || (y === goal[0] && x === goal[1])) {
       let neighbor = createNode([y, x], node, goal);
       neighbors.push(neighbor);
     } else if (field[y][x] === neighbor) {
@@ -57,8 +57,7 @@ export default function getNeighbors(fieldData, node, openList, informed) {
   function compareNeighbors(coords) {
     // find coords in openList
     let existingNeighbor = openList.find(
-      (node) =>
-        `${node.coords[0]} ${node.coords[1]}` === `${coords[0]} ${coords[1]}`
+      (node) => node.coords[0] === coords[0] && node.coords[1] === coords[1]
     );
     // compare gScore of existingNeighbor and node
     if (existingNeighbor.gScore > node.gScore + 1) {
