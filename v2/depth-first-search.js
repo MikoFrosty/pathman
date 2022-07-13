@@ -13,7 +13,7 @@ export default async function depthFirstSearch(fieldData, options) {
   let pathFound = false;
   let steps = 0;
 
-  search.textContent = `${informed ? "Best Depth First" : "Depth First"}`;
+  search.textContent = `${informed ? "Greedy Best First" : "Depth First"}`;
   status.textContent = "Searching for path...";
 
   // Test world object
