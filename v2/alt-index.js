@@ -58,6 +58,20 @@ findPath(generateField(genOptions), aStarSearch, {
   });
 });
 
+
+const genOptionsPG = {
+  density: 30,
+  size: 9
+}
+findPath(generateField(genOptionsPG), aStarSearch, {
+  searchOptions: {
+    ...searchOptions,
+    output: dom.out5
+  },
+  genOptionsPG,
+  once: true,
+});
+
 // start a new field and run search on it in a loop until a path is found, or once if once = true
 async function findPath(field, search, options) {
   const { searchOptions, genOptions, once } = options;
