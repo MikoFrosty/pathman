@@ -48,8 +48,8 @@ export function nodeHoverStats(field, display) {
     function showNodeData(e) {
       nodeData.style.display = "block";
       //make nodeData position next to mouse position
-      nodeData.style.top = e.clientY - 60 + "px";
-      nodeData.style.left = e.clientX - 60 + "px";
+      nodeData.style.top = e.pageY - 60 + "px";
+      nodeData.style.left = e.pageX - 60 + "px";
       // nodeData position by finger position on mobile
       nodeData.innerHTML = `${e.currentTarget.dataset.type}: y-${nodeY}, x-${nodeX}`;
     }
