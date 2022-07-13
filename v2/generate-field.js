@@ -23,8 +23,7 @@ export default function generateField(options) {
     [22, 22],
     [24, 24],
     [26, 26],
-    [28, 28],
-    [30, 30],
+    [28, 28]
   ];
   // destructure field size
   const [height, width] = fieldSizes[size];
