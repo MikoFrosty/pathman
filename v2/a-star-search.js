@@ -12,7 +12,7 @@ export default async function aStarSearch(fieldData, options) {
   } = options;
   const { floor, path, trail, neighbor, head, goal: goalHTML } = nodeHTML;
   
-  search.textContent = `${informed ? "A*" : "Breadth First"}`;
+  search.textContent = `${informed ? "A*" : "Dijkstra"}`;
   status.textContent = "Searching for path...";
   
   // Test world object
