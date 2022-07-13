@@ -18,6 +18,11 @@ const dom = {
         status: document.querySelector("#status4"),
         display: document.querySelector("#display4"),
         search: document.querySelector("#search4")
+    },
+    out5: {
+        status: document.querySelector("#status5"),
+        display: document.querySelector("#display5"),
+        search: document.querySelector("#search5")
     }
 };
 
