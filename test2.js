@@ -1,10 +1,19 @@
-let obj = {
-    name: "John",
-    age: 30,
-    isMarried: false,
-    hobbies: ["Sports", "Cooking"]
+function test() {
+    for (var i = 0; i < 100000; i++) {
+    }
+    console.log("test done");
 }
 
-let obj2 = {...obj, age: 31}
+function test2() {
+    for (var i = 0; i < 100000; i++) {
+        if (i === 99999) {
+            console.log("i = " + i);
+        }
+    }
+    console.log("test 2 done");
+}
 
-console.log({obj, obj2})
+test();
+test2();
+test();
+test2();
