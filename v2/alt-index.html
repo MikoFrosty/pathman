@@ -10,34 +10,38 @@
   </head>
   <body>
     <header>
-        <h1>Visualizing Pathfinding Algorithms</h1>
+      <h1>Visualizing Pathfinding Algorithms</h1>
     </header>
     <div class="field-row">
-    <div class="field-container">
-      <div class="info-box">
-        <p class="search-type">SEARCH TYPE: <span id="search1"></span></p>
-        <p><em>Status:</em></p>
-        <em><p class="status" id="status1"></p></em>
+      <div class="field-container">
+        <div class="info-box">
+          <p class="search-type">SEARCH TYPE: <span id="search1"></span></p>
+          <p><em>Status:</em></p>
+          <em><p class="status" id="status1"></p></em>
+        </div>
+        <div class="node-data"></div>
+        <div class="field" id="display1"></div>
       </div>
-      <div class="node-data"></div>
-      <div class="field" id="display1"></div>
-    </div>
-    <div class="field-container">
-      <div class="info-box">
-        <p class="search-type">SEARCH TYPE: <span id="search2"></span></p>
-        <em><p>Status:</p>
-        <p class="status" id="status2"></p></em>
+      <div class="field-container">
+        <div class="info-box">
+          <p class="search-type">SEARCH TYPE: <span id="search2"></span></p>
+          <em
+            ><p>Status:</p>
+            <p class="status" id="status2"></p
+          ></em>
+        </div>
+        <div class="node-data"></div>
+        <div class="field" id="display2"></div>
       </div>
-      <div class="node-data"></div>
-      <div class="field" id="display2"></div>
-    </div>
     </div>
     <div class="field-row">
-    <div class="field-container">
+      <div class="field-container">
         <div class="info-box">
           <p class="search-type">SEARCH TYPE: <span id="search3"></span></p>
-          <em><p>Status:</p>
-          <p class="status" id="status3"></p></em>
+          <em
+            ><p>Status:</p>
+            <p class="status" id="status3"></p
+          ></em>
         </div>
         <div class="node-data"></div>
         <div class="field" id="display3"></div>
@@ -45,12 +49,50 @@
       <div class="field-container">
         <div class="info-box">
           <p class="search-type">SEARCH TYPE: <span id="search4"></span></p>
-          <em><p>Status:</p>
-          <p class="status" id="status4"></p></em>
+          <em
+            ><p>Status:</p>
+            <p class="status" id="status4"></p
+          ></em>
         </div>
         <div class="node-data"></div>
         <div class="field" id="display4"></div>
       </div>
+    </div>
+    <div id="playground">
+        <h2>Playground</h2>
+        <div id="controls">
+            <!-- dropdown -->
+            <select id="algorithm-select">
+                <option disabled selected value> -- select an algorithm -- </option>
+                <option value="astar">A* Search</option>
+                <option value="dijkstra">Dijkstra</option>
+                <option value="gbf">Greedy Best First</option>
+                <option value="dfs">Depth First Search</option>
+            </select>
+            <!-- buttons -->
+            <button id="reset">Start</button>
+            <button id="play">Stop</button>
+            <button id="pause">New</button>
+            <button id="step">test</button>
+            <!-- sliders -->
+            <div id="slider-container">
+                <label for="density">Density:</label>
+                <input type="range" id="density" min="0" max="100" value="30" />
+                <label for="speed">Algo Speed:</label>
+                <input type="range" id="speed" min="0" max="9" value="0" />
+            </div>
+        </div>
+      <div class="field-container">
+        <div class="info-box">
+          <p class="search-type">SEARCH TYPE: <span id="search5"></span></p>
+          <em
+            ><p>Status:</p>
+            <p class="status" id="status5"></p
+          ></em>
+        </div>
+        <div class="node-data"></div>
+        <div class="field" id="display5"></div>
       </div>
+    </div>
   </body>
 </html>
