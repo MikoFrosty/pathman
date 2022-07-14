@@ -12,6 +12,16 @@ export default async function depthFirstSearch(fieldData, options) {
   const { floor, path, trail, neighbor, head, goal: goalHTML } = nodeHTML;
   let pathFound = false;
   let steps = 0;
+  let stop = false;
+  dom.start.addEventListener("click", () => {
+    stop = true;
+  });
+  dom.stop.addEventListener("click", () => {
+    stop = true;
+  });
+  dom.new.addEventListener("click", () => {
+    stop = true;
+  });
 
   search.textContent = `${informed ? "Greedy Best First" : "Depth First"}`;
   status.textContent = "Searching for path...";
@@ -22,6 +32,10 @@ export default async function depthFirstSearch(fieldData, options) {
 
   //main loop
   while (pathNodes.length > 0) {
+    // Break if stop is clicked
+    if (stop) {
+      break;
+    }
     steps++;
     status.textContent = "Searching for path...";
     // assign last spot in path to 'current' (if path exists), and destructure
