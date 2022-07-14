@@ -3,7 +3,7 @@ import nodeHTML from "./node-html.js";
 import dom, { renderField as render, stopOnce } from "./dom.js";
 
 // MAIN FUNCTION
-export default async function depthFirstSearch(fieldData, options) {
+export default async function stackSearch(fieldData, options) {
   // Destructuring parameters & nodeHTML
   const { field: originalField, start, goal } = fieldData;
   const {

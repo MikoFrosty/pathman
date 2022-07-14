@@ -4,7 +4,7 @@ import { createNode } from "./helpers.js";
 import dom, { renderField as render, stopOnce } from "./dom.js";
 
 // MAIN FUNCTION
-export default async function aStarSearch(fieldData, options) {
+export default async function queueSearch(fieldData, options) {
   // Destructuring parameters & nodeHTML
   const { field: originalField, start, goal } = fieldData;
   let {
