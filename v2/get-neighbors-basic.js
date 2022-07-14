@@ -3,58 +3,21 @@ import { boundaryCheck } from "./helpers.js";
 export default function getNeighbors(fieldData, node, informed) {
   const { field, floor, goal } = fieldData;
   const [y, x] = node;
-  const directions = ["up", "right", "down", "left"];
+  const dirs = {
+    up: [y - 1, x],
+    right: [y, x + 1],
+    down: [y + 1, x],
+    left: [y, x - 1],
+  };
 
   let neighbors = [];
 
-  // check all squares around current square for list of nodes & push to current nodes node list
-  directions.forEach((direction) => {
-    // check if direction is valid
-    if (!boundaryCheck(direction, [y, x], field)) {
-      switch (direction) {
-        case "up":
-          // if neighbor is not a wall
-          if (
-            field[y - 1][x] === floor ||
-            (y - 1 === goal[0] && x === goal[1])
-          ) {
-            // add node to last path
-            neighbors.push([y - 1, x]);
-          }
-          break;
-        case "right":
-          // if neighbor is not a wall
-          if (
-            field[y][x + 1] === floor ||
-            (y === goal[0] && x + 1 === goal[1])
-          ) {
-            // add node to last path
-            neighbors.push([y, x + 1]);
-          }
-          break;
-        case "down":
-          // if neighbor is not a wall
-          if (
-            field[y + 1][x] === floor ||
-            (y + 1 === goal[0] && x === goal[1])
-          ) {
-            // add node to last path
-            neighbors.push([y + 1, x]);
-          }
-          break;
-        case "left":
-          // if neighbor is not a wall
-          if (
-            field[y][x - 1] === floor ||
-            (y === goal[0] && x - 1 === goal[1])
-          ) {
-            // add node to last path
-            neighbors.push([y, x - 1]);
-          }
-          break;
-      }
+  // check all squares around node for neighbors
+  for (let dir in dirs) {
+    if (!boundaryCheck(dir, [y, x], field)) {
+      checkDirection(dirs[dir]);
     }
-  }); // End of forEach
+  }
 
   // sort current nodes by distance to goal
   // This informs the algorithm to move towards the goal
@@ -64,6 +27,14 @@ export default function getNeighbors(fieldData, node, informed) {
       let aDist = Math.abs(b[0] - goal[0]) + Math.abs(b[1] - goal[1]);
       return aDist - bDist;
     });
+  }
+
+  // Checks neighbors and pushes to neighbors list
+  function checkDirection(coords) {
+    const [y, x] = coords;
+    if (field[y][x] === floor || (y === goal[0] && x === goal[1])) {
+      neighbors.push(coords);
+    }
   }
 
   return neighbors;
