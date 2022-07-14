@@ -1,3 +1,4 @@
+// DOM ELEMENTS
 const dom = {
   out1: {
     status: document.querySelector("#status1"),
@@ -34,9 +35,9 @@ const dom = {
   speed: document.querySelector("#speed"),
   speedValue: document.querySelector("#speed-value"),
 };
-
 export default dom;
 
+// HOVER EFFECT ON SQUARES
 export function nodeHoverStats(field, display) {
   const nodes = display.querySelectorAll("div");
   nodes.forEach((node) => {
@@ -70,7 +71,7 @@ export function nodeHoverStats(field, display) {
   });
 }
 
-// print field to DOM
+// PRINT FIELD TO DOM
 export function renderField(field, oldField, display) {
   // oldField will be used for possible smart updating in the future
   // Possibly use this area for removing event listeners (if exist) and adding event listensers for the node squares
