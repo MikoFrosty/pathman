@@ -21,17 +21,17 @@ body {
   overflow-x: hidden;
 }
 h1 {
-    line-height: 70px;
-    min-height: 70px;
-    text-align: center;
+  line-height: 70px;
+  min-height: 70px;
+  text-align: center;
 }
 .field-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 10px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
 }
 .field-container {
   display: flex;
@@ -53,9 +53,9 @@ h1 {
   margin: 10px;
 }
 .search-type {
-    display: block;
-    font-size: 1.1rem;
-    font-weight: 500;
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 #playground {
   border-top: 1px solid #ccc;
@@ -66,38 +66,58 @@ h1 {
   background-color: #fafafa;
 }
 #playground h2 {
-    text-align: center;
-    font-size: 3.5rem;
+  text-align: center;
+  font-size: 3.5rem;
+  margin-bottom: 70px;
 }
 #playground #controls {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 10px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 800px;
+  margin: 10px auto 0 auto;
 }
 #playground .info-box {
-    height: auto;
+  margin-top: 0;
+  height: 70px;
+}
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
 }
 button {
-    border: none;
-    background-color: #fafafa;
-    margin: 0 10px;
-    padding: 10px;
-    font-size: 1.1rem;
-    font-weight: 500;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
+  border: none;
+  background-color: #fafafa;
+  margin: 0 10px;
+  padding: 10px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
 }
 button:hover {
-    background-color: #ccc;
+  border: 1px solid rgb(0, 0, 0);
 }
 button:active {
-    background-color: #aaa;
+  background-color: rgb(217, 217, 217);
 }
 /* style for drop down menu */
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.dropdown-container label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
 #algorithm-select {
   position: relative;
   display: inline-block;
@@ -108,27 +128,27 @@ button:active {
   outline: none;
 }
 
-#slider-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.slider-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-#slider-container label {
-    align-self: flex-start;
-    text-align: left;
-    font-size: 1.1rem;
-    font-weight: 500;
-    padding: 2px;
+.slider-container label {
+  align-self: flex-start;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 2px;
 }
-#slider-container input {
-    width: 100%;
-    height: 10px;
-    margin: 3px 0;
-    border-radius: 5px;
-    background: #fafafa;
-    outline: none;
-    border: 1px solid #ccc;
+.slider-container input {
+  width: 100%;
+  height: 10px;
+  margin: 3px 0;
+  border-radius: 5px;
+  background: #fafafa;
+  outline: none;
+  border: 1px solid #ccc;
 }
 .field {
   flex: 0 0 auto;
@@ -192,36 +212,62 @@ button:active {
   opacity: 0.9;
   z-index: 100;
 }
-
-.red {
-  color: red;
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+  width: 100%;
+  margin: 10px 0;
+}
+footer p {
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 @media only screen and (max-width: 730px) {
+  .dropdown-container {
+    margin: 10px 20px;
+  }
+  .slider-container {
+    margin: 0 20px;
+  }
+  .button-container {
+    margin: 20px 20px 0 20px;
+
+    order: 3;
+  }
   .field div {
     width: 14px;
     height: 14px;
   }
 }
 @media only screen and (max-width: 500px) {
-    p {
-        font-size: 0.8rem;
-    }
-    .search-type {
-        font-size: 0.8rem;
-    }
-    .field-container {
-        min-height: 210px;
-    }
+  h1 {
+    line-height: 1.5;
+  }
+  p {
+    font-size: 0.8rem;
+  }
+  .search-type {
+    font-size: 0.8rem;
+  }
+  .field-container {
+    min-height: 210px;
+  }
   .field div {
     width: 11px;
     height: 11px;
   }
 }
 @media only screen and (max-width: 380px) {
-    h1 {
-        line-height: 1.5;
-    }
+  h1 {
+    line-height: 1.3;
+  }
+  #playground h2 {
+    margin-bottom: 40px;
+  }
   .field-container {
     margin: 0;
   }
