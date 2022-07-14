@@ -1,8 +1,10 @@
 import getNeighbors from "./get-neighbors-basic.js";
 import nodeHTML from "./node-html.js";
-import dom, { renderField as render } from "./dom.js";
+import dom, { renderField as render, stopOnce } from "./dom.js";
 
+// MAIN FUNCTION
 export default async function depthFirstSearch(fieldData, options) {
+  // Destructuring parameters & nodeHTML
   const { field: originalField, start, goal } = fieldData;
   const {
     speed = 0,
@@ -10,34 +12,26 @@ export default async function depthFirstSearch(fieldData, options) {
     output: { display, status, search },
   } = options;
   const { floor, path, trail, neighbor, head, goal: goalHTML } = nodeHTML;
-  let pathFound = false;
-  let steps = 0;
-  let stop = false;
-  dom.start.addEventListener("click", () => {
-    stop = true;
-  });
-  dom.stop.addEventListener("click", () => {
-    stop = true;
-  });
-  dom.new.addEventListener("click", () => {
-    stop = true;
-  });
-
+  // Display text
   search.textContent = `${informed ? "Greedy Best First" : "Depth First"}`;
   status.textContent = "Searching for path...";
 
-  // Test world object
+  // Creating variables & objects.
+  let pathFound = false;
+  let steps = 0;
+  let stop = [false];
   const field = originalField.map((array) => [...array]);
   const pathNodes = [{ coords: start, nodes: [], check: 0 }];
+  // Stop on button press
+  stopOnce([dom.start, dom.stop, dom.new], stop);
 
-  //main loop
+  // MAIN LOOP
   while (pathNodes.length > 0) {
     // Break if stop is clicked
-    if (stop) {
+    if (stop[0]) {
       break;
     }
     steps++;
-    status.textContent = "Searching for path...";
     // assign last spot in path to 'current' (if path exists), and destructure
     let current = pathNodes[pathNodes.length - 1];
     let [y, x] = current.coords;
@@ -76,7 +70,7 @@ export default async function depthFirstSearch(fieldData, options) {
       field[y][x] = path;
     }
 
-    // if current node hasn't been checked yet // each node should only be checked once
+    // Find neighbors if not checked yet
     if (!current.check) {
       status.textContent = "Finding neighbors...";
       current.nodes = getNeighbors(
@@ -111,6 +105,9 @@ export default async function depthFirstSearch(fieldData, options) {
   if (!pathFound) {
     status.textContent = "No path found!";
   }
+  // Final render
   render(field, originalField, display);
+
+  // (true/false)
   return pathFound;
 }
