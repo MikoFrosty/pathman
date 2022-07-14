@@ -23,7 +23,15 @@ const dom = {
         status: document.querySelector("#status5"),
         display: document.querySelector("#display5"),
         search: document.querySelector("#search5")
-    }
+    },
+    algo: document.querySelector("#algorithm-select"),
+    start: document.querySelector("#start"),
+    stop: document.querySelector("#stop"),
+    new: document.querySelector("#new"),
+    density: document.querySelector("#density"),
+    densityValue: document.querySelector("#density-value"),
+    speed: document.querySelector("#speed"),
+    speedValue: document.querySelector("#speed-value")
 };
 
 export default dom;
