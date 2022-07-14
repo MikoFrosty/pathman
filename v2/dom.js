@@ -78,3 +78,17 @@ export function renderField(field, oldField, display) {
   const fieldHTML = field.map((row) => row.join("")).join("<br />");
   display.innerHTML = fieldHTML;
 }
+
+// STOP BUTTON
+// functionality inside algo (requires access to stop variable)
+export function stopOnce(domElements, stop) {
+  domElements.forEach((domElement) => {
+    domElement.addEventListener(
+      "click",
+      () => {
+        stop[0] = true;
+      },
+      { once: true }
+    );
+  });
+}
