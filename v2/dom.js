@@ -24,6 +24,7 @@ const dom = {
     display: document.querySelector("#display5"),
     search: document.querySelector("#search5"),
   },
+  reload: document.querySelector("#reload"),
   algo: document.querySelector("#algorithm-select"),
   start: document.querySelector("#start"),
   stop: document.querySelector("#stop"),
