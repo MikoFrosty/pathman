@@ -1,9 +1,9 @@
+/* MAIN */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
 html {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -20,11 +20,108 @@ body {
   background-color: #fafafa;
   overflow-x: hidden;
 }
+/* HEADINGS */
 h1 {
   line-height: 70px;
   min-height: 70px;
   text-align: center;
 }
+h2 {
+  text-align: center;
+  font-size: 3.5rem;
+  margin-bottom: 70px;
+}
+/* PLAYGROUND */
+#playground {
+  border-top: 1px solid #ccc;
+  width: 100%;
+  min-height: 100vh;
+  margin: 40px 0;
+  padding-top: 30px;
+  background-color: #fafafa;
+}
+#playground #controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 800px;
+  margin: 10px auto 0 auto;
+}
+#playground .info-box {
+  margin-top: 0;
+  height: 70px;
+}
+/* BUTTONS */
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+button {
+  border: none;
+  background-color: #fafafa;
+  margin: 0 10px;
+  padding: 10px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  border: 1px solid rgb(0, 0, 0);
+}
+button:active {
+  background-color: rgb(217, 217, 217);
+}
+/* DROPDOWN MENU */
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.dropdown-container label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+#algorithm-select {
+  position: relative;
+  display: inline-block;
+  padding: 2px;
+  font-size: 1.1rem;
+}
+#algorithm-select:focus {
+  outline: none;
+}
+/* SLIDERS */
+.slider-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.slider-container label {
+  align-self: flex-start;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 2px;
+}
+.slider-container input {
+  width: 100%;
+  height: 10px;
+  margin: 3px 0;
+  border-radius: 5px;
+  background: #fafafa;
+  outline: none;
+  border: 1px solid #ccc;
+}
+/* GAME FIELD OUTSIDE ELEMENTS */
 .field-row {
   display: flex;
   flex-direction: row;
@@ -57,99 +154,6 @@ h1 {
   font-size: 1.1rem;
   font-weight: 500;
 }
-#playground {
-  border-top: 1px solid #ccc;
-  width: 100%;
-  min-height: 100vh;
-  margin: 40px 0;
-  padding-top: 30px;
-  background-color: #fafafa;
-}
-#playground h2 {
-  text-align: center;
-  font-size: 3.5rem;
-  margin-bottom: 70px;
-}
-#playground #controls {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  max-width: 800px;
-  margin: 10px auto 0 auto;
-}
-#playground .info-box {
-  margin-top: 0;
-  height: 70px;
-}
-.button-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin: 10px 0;
-}
-button {
-  border: none;
-  background-color: #fafafa;
-  margin: 0 10px;
-  padding: 10px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-}
-button:hover {
-  border: 1px solid rgb(0, 0, 0);
-}
-button:active {
-  background-color: rgb(217, 217, 217);
-}
-/* style for drop down menu */
-.dropdown-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.dropdown-container label {
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 6px;
-}
-#algorithm-select {
-  position: relative;
-  display: inline-block;
-  padding: 2px;
-  font-size: 1.1rem;
-}
-#algorithm-select:focus {
-  outline: none;
-}
-
-.slider-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.slider-container label {
-  align-self: flex-start;
-  text-align: left;
-  font-size: 1.1rem;
-  font-weight: 500;
-  padding: 2px;
-}
-.slider-container input {
-  width: 100%;
-  height: 10px;
-  margin: 3px 0;
-  border-radius: 5px;
-  background: #fafafa;
-  outline: none;
-  border: 1px solid #ccc;
-}
 .field {
   flex: 0 0 auto;
   font-size: 0rem;
@@ -158,6 +162,7 @@ button:active {
   border-top: 1px solid rgb(0, 0, 0);
   border-left: 1px solid rgb(0, 0, 0);
 }
+/* GAME FIELD INSIDE ELEMENTS */
 .field div {
   position: relative;
   display: inline-block;
@@ -212,6 +217,7 @@ button:active {
   opacity: 0.9;
   z-index: 100;
 }
+/* FOOTER */
 footer {
   display: flex;
   flex-direction: row;
@@ -226,6 +232,7 @@ footer p {
   font-weight: 500;
 }
 
+/* MEDIA QUERIES */
 @media only screen and (max-width: 730px) {
   .dropdown-container {
     margin: 10px 20px;
@@ -235,7 +242,6 @@ footer p {
   }
   .button-container {
     margin: 20px 20px 0 20px;
-
     order: 3;
   }
   .field div {
@@ -265,7 +271,7 @@ footer p {
   h1 {
     line-height: 1.3;
   }
-  #playground h2 {
+  h2 {
     margin-bottom: 40px;
   }
   .field-container {
