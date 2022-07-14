@@ -3,7 +3,6 @@ import { randomNum } from "./helpers.js";
 
 // generate field given height, width, and density // return object with field, start position, and goal position
 export default function generateField(options) {
-
   // Init empty field, HTML strings, and options
   const field = [];
   const { floor, wall, start, goal } = nodeHTML;
@@ -23,7 +22,7 @@ export default function generateField(options) {
     [22, 22],
     [24, 24],
     [26, 26],
-    [28, 28]
+    [28, 28],
   ];
   // destructure field size
   const [height, width] = fieldSizes[size];
