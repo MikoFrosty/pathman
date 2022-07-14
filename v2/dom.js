@@ -1,37 +1,37 @@
 const dom = {
-    out1: {
-        status: document.querySelector("#status1"),
-        display: document.querySelector("#display1"),
-        search: document.querySelector("#search1"),
-    },
-    out2: {
-        status: document.querySelector("#status2"),
-        display: document.querySelector("#display2"),
-        search: document.querySelector("#search2")
-    },
-    out3: {
-        status: document.querySelector("#status3"),
-        display: document.querySelector("#display3"),
-        search: document.querySelector("#search3")
-    },
-    out4: {
-        status: document.querySelector("#status4"),
-        display: document.querySelector("#display4"),
-        search: document.querySelector("#search4")
-    },
-    out5: {
-        status: document.querySelector("#status5"),
-        display: document.querySelector("#display5"),
-        search: document.querySelector("#search5")
-    },
-    algo: document.querySelector("#algorithm-select"),
-    start: document.querySelector("#start"),
-    stop: document.querySelector("#stop"),
-    new: document.querySelector("#new"),
-    density: document.querySelector("#density"),
-    densityValue: document.querySelector("#density-value"),
-    speed: document.querySelector("#speed"),
-    speedValue: document.querySelector("#speed-value")
+  out1: {
+    status: document.querySelector("#status1"),
+    display: document.querySelector("#display1"),
+    search: document.querySelector("#search1"),
+  },
+  out2: {
+    status: document.querySelector("#status2"),
+    display: document.querySelector("#display2"),
+    search: document.querySelector("#search2"),
+  },
+  out3: {
+    status: document.querySelector("#status3"),
+    display: document.querySelector("#display3"),
+    search: document.querySelector("#search3"),
+  },
+  out4: {
+    status: document.querySelector("#status4"),
+    display: document.querySelector("#display4"),
+    search: document.querySelector("#search4"),
+  },
+  out5: {
+    status: document.querySelector("#status5"),
+    display: document.querySelector("#display5"),
+    search: document.querySelector("#search5"),
+  },
+  algo: document.querySelector("#algorithm-select"),
+  start: document.querySelector("#start"),
+  stop: document.querySelector("#stop"),
+  new: document.querySelector("#new"),
+  density: document.querySelector("#density"),
+  densityValue: document.querySelector("#density-value"),
+  speed: document.querySelector("#speed"),
+  speedValue: document.querySelector("#speed-value"),
 };
 
 export default dom;
