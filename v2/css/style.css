@@ -22,6 +22,7 @@ body {
 }
 /* HEADINGS */
 h1 {
+  margin: 10px;
   line-height: 70px;
   min-height: 70px;
   text-align: center;

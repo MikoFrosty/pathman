@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pathman</title>
+    <script src="./index.js" defer></script>
+    <link rel="stylesheet" href="./normalize.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container left">
+      <!-- table for path data -->
+      <table id="path-table">
+        <thead>
+          <tr>
+            <th>Node</th>
+            <th>Unexplored Branches</th>
+          </tr>
+        </thead>
+        <tbody id="path-table-body">         
+        </tbody>
+      </table>
+    </div>
+    <div class="container center">
+    <div id="validation-result"></div>
+    <div id="notification"></div>
+    <div id="game">
+      <pre id="terminal"></pre>
+    </div>
+    <div id="buttons">
+      <button id="left">Left</button>
+      <button id="right">Right</button>
+      <button id="down">Down</button>
+      <button id="up">Up</button>
+    </div>
+    <div id="options">
+      <button id="new">New Game</button>
+      <button id="validate">Validate</button>
+      <button id="auto">Auto Validate</button>
+      <button id="stop">Stop</button>
+      <div id="sliders">
+        <div id="size-slider-container">
+          <div id="size-slider-label">Size (HxW): [12,20]</div>
+          <input type="range" min="0" max="5" value="5" id="size-slider" />
+        </div>
+        <div id="density-slider-container">
+          <div id="density-slider-label">Density: 5</div>
+          <input type="range" min="0" max="10" value="5" id="density-slider" />
+        </div>
+        <div id="speed-slider-container">
+          <div id="speed-slider-label">Speed: 0</div>
+          <input type="range" min="0" max="10" value="0" id="speed-slider" />
+        </div>
+      </div>
+    </div>
+    <p>'WASD' keys can be used for movement</p>
+    </div>
+    <div class="container right"></div>
+    <script>
+      (function () {
+        "use strict";
+
+        var baseLogFunction = console.log;
+        console.log = function () {
+          baseLogFunction.apply(console, arguments);
+
+          var args = Array.prototype.slice.call(arguments);
+          for (var i = 0; i < args.length; i++) {
+            var node = createLogNode(args[i]);
+            // if node is shorter than 50 chars, output to different spot
+            if (node.innerText.length < 60) {
+              document.getElementById("notification").appendChild(node);
+            } else {
+              document.getElementById("terminal").appendChild(node);
+            }
+          }
+        };
+
+        //clear terminal on console.clear()
+        var baseClearFunction = console.clear;
+        console.clear = function () {
+          baseClearFunction.apply(console, arguments);
+          document.querySelector("#terminal").innerHTML = "";
+          document.querySelector("#notification").innerHTML = "";
+        };
+
+        function createLogNode(message) {
+          var node = document.createElement("div");
+          var textNode = document.createTextNode(message);
+          node.appendChild(textNode);
+          return node;
+        }
+
+        window.onerror = function (message, url, linenumber) {
+          console.log(
+            "JavaScript error: " +
+              message +
+              " on line " +
+              linenumber +
+              " for " +
+              url
+          );
+        };
+      })();
+    </script>
+  </body>
+</html>

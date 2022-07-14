@@ -4,106 +4,110 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pathman</title>
-    <script src="./index.js" defer></script>
-    <link rel="stylesheet" href="./normalize.css" />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./v2/css/normalize.css" />
+    <link rel="stylesheet" href="./v2/css/style.css" />
+    <script src="./v2/js/index.js" type="module" defer></script>
+    <title>Visualizing Pathfinding Algorithms</title>
   </head>
   <body>
-    <div class="container left">
-      <!-- table for path data -->
-      <table id="path-table">
-        <thead>
-          <tr>
-            <th>Node</th>
-            <th>Unexplored Branches</th>
-          </tr>
-        </thead>
-        <tbody id="path-table-body">         
-        </tbody>
-      </table>
-    </div>
-    <div class="container center">
-    <div id="validation-result"></div>
-    <div id="notification"></div>
-    <div id="game">
-      <pre id="terminal"></pre>
-    </div>
-    <div id="buttons">
-      <button id="left">Left</button>
-      <button id="right">Right</button>
-      <button id="down">Down</button>
-      <button id="up">Up</button>
-    </div>
-    <div id="options">
-      <button id="new">New Game</button>
-      <button id="validate">Validate</button>
-      <button id="auto">Auto Validate</button>
-      <button id="stop">Stop</button>
-      <div id="sliders">
-        <div id="size-slider-container">
-          <div id="size-slider-label">Size (HxW): [12,20]</div>
-          <input type="range" min="0" max="5" value="5" id="size-slider" />
+    <!-- HEADER -->
+    <header>
+      <h1>Visualizing Pathfinding Algorithms</h1>
+    </header>
+    <!-- DEMO -->
+    <div class="field-row">
+      <div class="field-container">
+        <div class="info-box">
+          <p class="search-type">SEARCH TYPE: <span id="search1"></span></p>
+          <p><em>Status:</em></p>
+          <em><p class="status" id="status1"></p></em>
         </div>
-        <div id="density-slider-container">
-          <div id="density-slider-label">Density: 5</div>
-          <input type="range" min="0" max="10" value="5" id="density-slider" />
+        <div class="node-data"></div>
+        <div class="field" id="display1"></div>
+      </div>
+      <div class="field-container">
+        <div class="info-box">
+          <p class="search-type">SEARCH TYPE: <span id="search2"></span></p>
+          <em
+            ><p>Status:</p>
+            <p class="status" id="status2"></p
+          ></em>
         </div>
-        <div id="speed-slider-container">
-          <div id="speed-slider-label">Speed: 0</div>
-          <input type="range" min="0" max="10" value="0" id="speed-slider" />
-        </div>
+        <div class="node-data"></div>
+        <div class="field" id="display2"></div>
       </div>
     </div>
-    <p>'WASD' keys can be used for movement</p>
+    <div class="field-row">
+      <div class="field-container">
+        <div class="info-box">
+          <p class="search-type">SEARCH TYPE: <span id="search3"></span></p>
+          <em
+            ><p>Status:</p>
+            <p class="status" id="status3"></p
+          ></em>
+        </div>
+        <div class="node-data"></div>
+        <div class="field" id="display3"></div>
+      </div>
+      <div class="field-container">
+        <div class="info-box">
+          <p class="search-type">SEARCH TYPE: <span id="search4"></span></p>
+          <em
+            ><p>Status:</p>
+            <p class="status" id="status4"></p
+          ></em>
+        </div>
+        <div class="node-data"></div>
+        <div class="field" id="display4"></div>
+      </div>
     </div>
-    <div class="container right"></div>
-    <script>
-      (function () {
-        "use strict";
-
-        var baseLogFunction = console.log;
-        console.log = function () {
-          baseLogFunction.apply(console, arguments);
-
-          var args = Array.prototype.slice.call(arguments);
-          for (var i = 0; i < args.length; i++) {
-            var node = createLogNode(args[i]);
-            // if node is shorter than 50 chars, output to different spot
-            if (node.innerText.length < 60) {
-              document.getElementById("notification").appendChild(node);
-            } else {
-              document.getElementById("terminal").appendChild(node);
-            }
-          }
-        };
-
-        //clear terminal on console.clear()
-        var baseClearFunction = console.clear;
-        console.clear = function () {
-          baseClearFunction.apply(console, arguments);
-          document.querySelector("#terminal").innerHTML = "";
-          document.querySelector("#notification").innerHTML = "";
-        };
-
-        function createLogNode(message) {
-          var node = document.createElement("div");
-          var textNode = document.createTextNode(message);
-          node.appendChild(textNode);
-          return node;
-        }
-
-        window.onerror = function (message, url, linenumber) {
-          console.log(
-            "JavaScript error: " +
-              message +
-              " on line " +
-              linenumber +
-              " for " +
-              url
-          );
-        };
-      })();
-    </script>
+    <button id="reload">Reload</button>
+    <!-- PLAYGROUND -->
+    <div id="playground">
+      <h2>Playground</h2>
+      <div id="controls">
+        <!-- dropdown -->
+        <div class="dropdown-container">
+          <label for="algorithm-select">Search Type</label>
+          <select id="algorithm-select">
+            <option value="astar">A*</option>
+            <option value="dijkstra">Dijkstra</option>
+            <option value="gbf">Greedy Best First</option>
+            <option value="dfs">Depth First</option>
+          </select>
+        </div>
+        <!-- buttons -->
+        <div class="button-container">
+          <button id="start">Start</button>
+          <button id="stop">Stop/Clear</button>
+          <button id="new">New</button>
+        </div>
+        <!-- sliders -->
+        <div class="slider-container">
+          <label for="density"
+            >Density: <span id="density-value">30</span></label
+          >
+          <input type="range" id="density" min="0" max="100" value="30" />
+          <label for="speed">Algo Speed: <span id="speed-value">0</span></label>
+          <input type="range" id="speed" min="0" max="9" value="0" />
+        </div>
+      </div>
+      <!-- Display -->
+      <div class="field-container">
+        <div class="info-box">
+          <p class="search-type">SEARCH TYPE: <span id="search5">A*</span></p>
+          <em
+            ><p>Status:</p>
+            <p class="status" id="status5"></p
+          ></em>
+        </div>
+        <div class="node-data"></div>
+        <div class="field" id="display5"></div>
+      </div>
+    </div>
+    <!-- FOOTER -->
+    <footer>
+      <p>Created by Brandon Mikowski</p>
+    </footer>
   </body>
 </html>
