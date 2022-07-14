@@ -58,33 +58,39 @@
         <div class="field" id="display4"></div>
       </div>
     </div>
+    <button id="reload">Reload</button>
     <div id="playground">
-        <h2>Playground</h2>
-        <div id="controls">
-            <!-- dropdown -->
-            <select id="algorithm-select">
-                <option disabled selected value> -- select an algorithm -- </option>
-                <option value="astar">A* Search</option>
-                <option value="dijkstra">Dijkstra</option>
-                <option value="gbf">Greedy Best First</option>
-                <option value="dfs">Depth First Search</option>
-            </select>
-            <!-- buttons -->
-            <button id="reset">Start</button>
-            <button id="play">Stop</button>
-            <button id="pause">New</button>
-            <button id="step">test</button>
-            <!-- sliders -->
-            <div id="slider-container">
-                <label for="density">Density:</label>
-                <input type="range" id="density" min="0" max="100" value="30" />
-                <label for="speed">Algo Speed:</label>
-                <input type="range" id="speed" min="0" max="9" value="0" />
-            </div>
+      <h2>Playground</h2>
+      <div id="controls">
+        <!-- dropdown -->
+        <div class="dropdown-container">
+          <label for="algorithm-select">Search Type</label>
+          <select id="algorithm-select">
+            <option value="astar">A*</option>
+            <option value="dijkstra">Dijkstra</option>
+            <option value="gbf">Greedy Best First</option>
+            <option value="dfs">Depth First</option>
+          </select>
         </div>
+        <!-- buttons -->
+        <div class="button-container">
+          <button id="start">Start</button>
+          <button id="stop">Stop/Clear</button>
+          <button id="new">New</button>
+        </div>
+        <!-- sliders -->
+        <div class="slider-container">
+          <label for="density"
+            >Density: <span id="density-value">30</span></label
+          >
+          <input type="range" id="density" min="0" max="100" value="30" />
+          <label for="speed">Algo Speed: <span id="speed-value">0</span></label>
+          <input type="range" id="speed" min="0" max="9" value="0" />
+        </div>
+      </div>
       <div class="field-container">
         <div class="info-box">
-          <p class="search-type">SEARCH TYPE: <span id="search5"></span></p>
+          <p class="search-type">SEARCH TYPE: <span id="search5">A*</span></p>
           <em
             ><p>Status:</p>
             <p class="status" id="status5"></p
@@ -94,5 +100,8 @@
         <div class="field" id="display5"></div>
       </div>
     </div>
+    <footer>
+      <p>Created by Brandon Mikowski</p>
+    </footer>
   </body>
 </html>
