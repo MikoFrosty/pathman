@@ -32,9 +32,8 @@ export default function getNeighbors(fieldData, node, openList, informed) {
       }
     });
   } else {
-    // Breadth first search instead of Best first A*
+    // Dijkstra (basically) - next node searched will always be closest to start
     openList.sort((a, b) => b.gScore - a.gScore);
-    // no sort - basically depth first search
   }
 
   // add neighbor HTML to field for new neighbors found
@@ -42,6 +41,7 @@ export default function getNeighbors(fieldData, node, openList, informed) {
     field[branch.coords[0]][branch.coords[1]] = neighbor;
   });
 
+  // FUNCTIONS
   // Handle neighbor check in specific direction
   function checkDirection(coords) {
     const [y, x] = coords;
