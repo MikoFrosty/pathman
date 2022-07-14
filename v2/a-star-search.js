@@ -11,10 +11,10 @@ export default async function aStarSearch(fieldData, options) {
     output: { display, status, search },
   } = options;
   const { floor, path, trail, neighbor, head, goal: goalHTML } = nodeHTML;
-  
+
   search.textContent = `${informed ? "A*" : "Dijkstra"}`;
   status.textContent = "Searching for path...";
-  
+
   // Test world object
   const field = originalField.map((array) => [...array]);
   let openList = [];
@@ -24,16 +24,27 @@ export default async function aStarSearch(fieldData, options) {
   let pathFound = false;
   let steps = 0;
   let stop = false;
-  dom.start.addEventListener("click", () => {
-    stop = true;
-  }, { once: true });
-  dom.stop.addEventListener("click", () => {
-    stop = true;
-  }, { once: true });
-  dom.new.addEventListener("click", () => {
-    stop = true;
-  }, { once: true });
-  
+  dom.start.addEventListener(
+    "click",
+    () => {
+      stop = true;
+    },
+    { once: true }
+  );
+  dom.stop.addEventListener(
+    "click",
+    () => {
+      stop = true;
+    },
+    { once: true }
+  );
+  dom.new.addEventListener(
+    "click",
+    () => {
+      stop = true;
+    },
+    { once: true }
+  );
 
   //main loop
   while (openList.length) {
