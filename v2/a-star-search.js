@@ -5,8 +5,8 @@ import dom, { renderField as render } from "./dom.js";
 
 export default async function aStarSearch(fieldData, options) {
   const { field: originalField, start, goal } = fieldData;
-  const {
-    speed = 0,
+  let {
+    speed,
     informed = false,
     output: { display, status, search },
   } = options;
@@ -23,9 +23,24 @@ export default async function aStarSearch(fieldData, options) {
   openList.push(startNode);
   let pathFound = false;
   let steps = 0;
+  let stop = false;
+  dom.start.addEventListener("click", () => {
+    stop = true;
+  }, { once: true });
+  dom.stop.addEventListener("click", () => {
+    stop = true;
+  }, { once: true });
+  dom.new.addEventListener("click", () => {
+    stop = true;
+  }, { once: true });
+  
 
   //main loop
   while (openList.length) {
+    // Break if stop is clicked
+    if (stop) {
+      break;
+    }
     steps++;
     // assign last spot in path to 'current', and destructure
     let current = openList[openList.length - 1];
