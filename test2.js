@@ -1,19 +1,9 @@
-function test() {
-    for (var i = 0; i < 100000; i++) {
-    }
-    console.log("test done");
+let test = 4;
+
+function test2(num) {
+    num[0] = 5;
 }
 
-function test2() {
-    for (var i = 0; i < 100000; i++) {
-        if (i === 99999) {
-            console.log("i = " + i);
-        }
-    }
-    console.log("test 2 done");
-}
+test2({test});
 
-test();
-test2();
-test();
-test2();
+console.log(test);
