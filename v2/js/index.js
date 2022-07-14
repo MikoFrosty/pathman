@@ -3,9 +3,9 @@
 // Created by: Brandon Mikowski
 
 ///////////////////////// IMPORTS //////////////////////////
-import depthFirstSearch from "./depth-first-search.js";
 import generateField from "./generate-field.js";
-import aStarSearch from "./a-star-search.js";
+import aStar from "./queue-search.js";
+import dfs from "./stack-search.js";
 import dom, { nodeHoverStats, renderField as render } from "./dom.js";
 
 /////////////////////////// DEMO ///////////////////////////
@@ -26,7 +26,7 @@ const searchOptionsPG = {
   speed: 0,
   informed: true,
   output: dom.out5,
-  algo: aStarSearch,
+  algo: aStar,
 };
 const genOptionsPG = {
   density: 30,
@@ -46,19 +46,19 @@ dom.algo.addEventListener("change", (e) => {
   const algo = e.target.value;
   if (algo === "astar") {
     dom.out5.search.textContent = "A*";
-    searchOptionsPG.algo = aStarSearch;
+    searchOptionsPG.algo = aStar;
     searchOptionsPG.informed = true;
   } else if (algo === "dijkstra") {
     dom.out5.search.textContent = "Dijkstra";
-    searchOptionsPG.algo = aStarSearch;
+    searchOptionsPG.algo = aStar;
     searchOptionsPG.informed = false;
   } else if (algo === "gbf") {
     dom.out5.search.textContent = "Greedy Best First";
-    searchOptionsPG.algo = depthFirstSearch;
+    searchOptionsPG.algo = dfs;
     searchOptionsPG.informed = true;
   } else if (algo === "dfs") {
     dom.out5.search.textContent = "Depth First";
-    searchOptionsPG.algo = depthFirstSearch;
+    searchOptionsPG.algo = dfs;
     searchOptionsPG.informed = false;
   }
 });
@@ -101,7 +101,7 @@ function runDemo() {
   for (let element in dom.out1) {
     dom.out1[element].style.display = "none";
   }
-  findPath(generateField(genOptions), aStarSearch, {
+  findPath(generateField(genOptions), aStar, {
     searchOptions: {
       ...searchOptions,
       speed: 10,
@@ -118,25 +118,25 @@ function runDemo() {
       }
     }, 200);
     // Dijkstra
-    findPath(field, aStarSearch, {
+    findPath(field, aStar, {
       searchOptions: { ...searchOptions, informed: false, output: dom.out1 },
       genOptions,
       once: true,
     });
     // Depth First
-    findPath(field, depthFirstSearch, {
+    findPath(field, dfs, {
       searchOptions: { ...searchOptions, informed: false, output: dom.out2 },
       genOptions,
       once: true,
     });
     // A*
-    findPath(field, aStarSearch, {
+    findPath(field, aStar, {
       searchOptions: { ...searchOptions, informed: true, output: dom.out3 },
       genOptions,
       once: true,
     });
     // Best Depth First
-    findPath(field, depthFirstSearch, {
+    findPath(field, dfs, {
       searchOptions: { ...searchOptions, informed: true, output: dom.out4 },
       genOptions,
       once: true,
