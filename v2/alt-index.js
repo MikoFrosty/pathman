@@ -1,3 +1,7 @@
+// PATHMAN - Pathfinding Algorithm Visualizer
+// Language: javascript
+// Created by: Brandon Mikowski
+
 import depthFirstSearch from "./depth-first-search.js";
 import generateField from "./generate-field.js";
 import aStarSearch from "./a-star-search.js";
