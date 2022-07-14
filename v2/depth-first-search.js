@@ -65,7 +65,9 @@ export default async function depthFirstSearch(fieldData, options) {
     if (y === goal[0] && x === goal[1]) {
       field[y][x] = goalHTML;
       pathFound = true;
-      status.textContent = `Path found! Loops: ${steps} - Path length: ${pathNodes.length - 2}`;
+      status.textContent = `Path found! Loops: ${steps} - Path length: ${
+        pathNodes.length - 2
+      }`;
       break;
     }
 
