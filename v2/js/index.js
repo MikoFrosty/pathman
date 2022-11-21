@@ -81,6 +81,7 @@ dom.new.addEventListener("click", () => {
   // render new field after short delay
   setTimeout(() => {
     render(fieldPG.field, null, dom.out5.display);
+    nodeHoverStats(fieldPG.field, dom.out5.display);
   }, 200);
 });
 // density slider
