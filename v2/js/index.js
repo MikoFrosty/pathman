@@ -35,6 +35,7 @@ const genOptionsPG = {
 // initialize new field and display
 let fieldPG = generateField(genOptionsPG);
 render(fieldPG.field, null, dom.out5.display);
+nodeHoverStats(fieldPG.field, dom.out5.display);
 
 //////////////////// EVENT LISTENERS //////////////////////////
 // reload button
